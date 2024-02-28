@@ -1,16 +1,13 @@
 const controller = {};
-const db = require('./db');
+const conn = require('./db');
 
 controller.project = async (req,res) => { 
-    
-    try {
-        const result = await db.query('SELECT * FROM hardware');
-        res.render('iotProject',{data:result.rows});
-        //res.json(result.rows);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-      }
+   
+        conn.query('SELECT * FROM hardware',function(error,result){
+            if(error) throw error;
+            res.render('iotProject',{data:result.rows});
+        });
+      
            
 
 };
