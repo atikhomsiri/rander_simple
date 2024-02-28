@@ -12,6 +12,14 @@ const client = new Client({
     database: 'sql_thesaban',
   });
 
+  client.query('SELECT * FROM hardware', (err, result) => {
+  if (err) {
+    console.error('Error executing query', err);
+  } else {
+    console.log('Query result:', result.rows);
+  }
+  });
+
   client.connect()
   .then(() => {
     console.log('Connected to PostgreSQL database');
