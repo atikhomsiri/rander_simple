@@ -6,4 +6,6 @@ const Controller = require("../controllers/iotController");
 
 router.get('/',Controller.project);
 
+router.get('/iot',Controller.iot);
+
 module.exports = router;
