@@ -9,6 +9,7 @@ let org = `e266c442dcee6ac5`
 let bucket = `THESABAN`
 
 controller.iot = (req,res) => { 
+    let value=0;
     let queryClient = client.getQueryApi(org)
     let fluxQuery = `from(bucket: "THESABAN")
      |> range(start: -5m)
@@ -19,7 +20,7 @@ controller.iot = (req,res) => {
     queryClient.queryRows(fluxQuery, {
       next: (row, tableMeta) => {
         const tableObject = tableMeta.toObject(row)
-        console.log(tableObject._value);
+        value=tableObject._value;
         
       },
       error: (error) => {
@@ -27,8 +28,8 @@ controller.iot = (req,res) => {
       },
       complete: () => {
        
-        res.end("IOT Hello!");
-        
+        res.end(value);
+
       },
     })
     
