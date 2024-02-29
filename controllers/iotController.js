@@ -9,7 +9,7 @@ let org = `e266c442dcee6ac5`
 let bucket = `THESABAN`
 
 controller.iot = (req,res) => { 
-    let value=0;
+    var value=null;
     let queryClient = client.getQueryApi(org)
     let fluxQuery = `from(bucket: "THESABAN")
      |> range(start: -5m)
@@ -27,8 +27,8 @@ controller.iot = (req,res) => {
         console.error('\nError', error)
       },
       complete: () => {
+        res.render('iotInflux',{data:value});
        
-        res.end(value);
 
       },
     })
