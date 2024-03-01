@@ -27,7 +27,7 @@ controller.iot = (req,res) => {
         console.error('\nError', error)
       },
       complete: () => {
-        res.render('iotInflux',{data:value});
+                res.render('iotInflux',{data:value});
        
 
       },
