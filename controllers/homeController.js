@@ -1,6 +1,21 @@
 const controller = {};
 const db = require('./db');
 
+controller.index =  (req,res) => { 
+    res.render('index');
+}
+
+controller.login =  (req,res) => { 
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if(username == "mirot" && password == "Passw0rd"){
+        res.send("OK")
+    }else{
+        res.send("ERROR")
+    }
+}
+
 controller.home =  (req,res) => { 
 
     db.query('SELECT count(*) as hardware FROM hardware',function(err,hardwaredata){

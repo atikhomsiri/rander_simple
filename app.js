@@ -18,6 +18,14 @@ app.use(session({
 const body = require("body-parser");
 app.use(body());
 
+const UserData=[ {
+  username: "admin",
+  password: "Passw0rd!"
+},
+{
+  username: "mirot",
+  password: "Passw0rd!"
+} ]
 
 const path = require('path')
 app.use('/static', express.static(path.join(__dirname, 'public')))
