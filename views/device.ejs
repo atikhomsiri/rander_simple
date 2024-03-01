@@ -1,0 +1,37 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+
+<h1> Device </h1>
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Mac Address</th>
+        <th scope="col">Hardware</th>
+        <th scope="col">Build Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col">  Action <a href="/device/add" class="btn btn-primary"> Add </a>  </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(data){ for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].mac %> </td>
+                <td> <%= data[i].hwname %> </td>
+                <td> <%= data[i].builddate.toLocaleDateString('el-GR') %> </td>
+                <td> <%= data[i].comment %> </td>
+                <td>  
+                <a href="/device/delete/<%= data[i].did %>" class="btn btn-danger"> Del </a>
+                <a href="/device/edit/<%= data[i].did %>" class="btn btn-info"> Edit </a>
+               
+                </td>
+            </tr>
+        <%  } } %>
+    </tbody>
+</table>
+
+
+<%- include ('_footer') %>
