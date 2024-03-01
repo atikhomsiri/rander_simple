@@ -46,7 +46,7 @@ app.use("/owner",ownerRoute);
 const homeRoute = require("./routes/homeRoute");
 app.use("/",homeRoute);
 
-//const iotRoute = require("./routes/iotRoute");
-//app.use("/iot",iotRoute);
+const iotRoute = require("./routes/iotRoute");
+app.use("/iot",iotRoute);
 
 app.listen("3000");
