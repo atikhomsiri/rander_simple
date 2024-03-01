@@ -28,4 +28,10 @@ app.use("/hardware",hardwareRoute);
 const deviceRoute = require("./routes/deviceRoute");
 app.use("/device",deviceRoute);
 
+const registerRoute = require("./routes/registerRoute");
+app.use("/register",registerRoute);
+
+const userRoute = require("./routes/userRoute");
+app.use("/user",userRoute);
+
 app.listen("3000");
