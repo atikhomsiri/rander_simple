@@ -4,7 +4,17 @@ const app = express();
 app.set("view engine","ejs");
 
 const session = require("express-session");
-app.use(session({secret:"Passw0rd"}));
+
+app.use(session({
+    cookie:{
+        secure: true,
+        maxAge:60000
+           },
+    store: new RedisStore(),
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: false
+}));
 
 const body = require("body-parser");
 app.use(body());
