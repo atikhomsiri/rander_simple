@@ -1,0 +1,49 @@
+<%- include('_header') %>
+
+<% JSON.stringify(rdata) %>
+
+
+<h1> Device Owner Room Assignment </h1>
+
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+    <H3> > DeviceOwner > Room </H3>
+    <form  action="/owner/room/" method="post">
+        <div class="mb-3">
+          <label  class="form-label">User</label>
+          <input type="text" class="form-control" value="<%= data.name %> (<%= data.email %>)" readonly>
+          <input type="hidden" name="userId" value="<%= data.uid %>">
+        </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Mac Address </label>
+            <input type="text" class="form-control" value="<%= data.mac %> " readonly>
+            <input type="hidden" name="deviceId" value="<%= data.deviceid %>">
+        </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Hardware</label>
+            <input type="text" class="form-control" value="<%= data.hwname %>" readonly>
+          </div>
+          
+          
+        <div class="mb-3">
+            <label  class="form-label"> Site </label>
+            <input type="text" class="form-control" value="<%= data.sitename %> " readonly>
+            <input type="hidden" name="siteId" value="<%= data.sid %>">
+        </div>
+          
+          <div class="mb-3">
+            <label  class="form-label">Room</label>
+            <select class="form-control" name="roomId">
+                <option>Please select</option>
+                <% if(rdata){ for(var i=0;i<rdata.length;i++){ %>
+                        <option value="<%= rdata[i].roid %>"> <%= rdata[i].roomname %> </option>
+                <% } } %>
+            </select>
+        </div>
+
+        <div class="text-center"> <a href="/owner" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+
+      <%- include ('_footer') %>

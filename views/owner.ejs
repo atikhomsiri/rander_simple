@@ -1,0 +1,50 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+ 
+<h1> Device Owner </h1>
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Device Mac</th>
+        <th scope="col">Device Hardware</th>
+        <th scope="col">User(Email)</th>
+       
+        
+        <th scope="col">Add Date</th>
+        <th scope="col">Site</th>
+        <th scope="col">Room</th>
+        <th scope="col">Comment</th>
+        <th scope="col">  Action <a href="/owner/menuinflux" class="btn btn-primary">Add </a> </th>
+      </tr>
+
+      <% if(data){ for(var i=0;i<data.length;i++){ %>
+        <tr>
+            <td> <%= (i+1) %> </td>
+            
+            
+            <td> <%= data[i].mac %> </td>
+            <td> <%= data[i].hwname %> </td>
+            <td> <%= data[i].name %> (<%= data[i].email %> )</td>
+           
+            <td> <%= data[i].adddate.toLocaleDateString('el-GR') %> </td>
+            
+            <td> <% if(!data[i].sitename) { %> <a href="/owner/site/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-warning"> Set </a> <% }else{ %><%= data[i].sitename %> <a href="/owner/clearsite/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Clear </a> <% } %> </td>
+            <td> <% if(!data[i].roomname) { %> <a href="/owner/room/<%= data[i].deviceid %>/<%= data[i].uid %>/<%= data[i].sid %>" class="btn btn-warning"> Set </a> <% }else{ %> <%= data[i].roomname %> <a href="/owner/clearroom/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Clear </a> <% } %>  </td>
+            <td> <%= data[i].ownerComment %> </td>
+            
+            <td>  
+            <a href="/owner/delete/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Del </a>
+            <a href="/iot/<%= data[i].datapoint %>/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-success"> Show </a>
+            </td>
+        </tr>
+    <%  } } %>
+
+
+    </thead>
+    <tbody>
+
+
+<%- include ('_footer') %>

@@ -40,4 +40,7 @@ app.use("/site",siteRoute);
 const roomRoute = require("./routes/roomRoute");
 app.use("/room",roomRoute);
 
+const ownerRoute = require("./routes/ownerRoute");
+app.use("/owner",ownerRoute);
+
 app.listen("3000");
