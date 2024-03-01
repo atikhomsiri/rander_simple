@@ -25,4 +25,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')))
 const hardwareRoute = require("./routes/hardwareRoute");
 app.use("/hardware",hardwareRoute);
 
+const deviceRoute = require("./routes/deviceRoute");
+app.use("/device",deviceRoute);
+
 app.listen("3000");
