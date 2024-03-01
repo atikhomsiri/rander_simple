@@ -1,1 +1,55 @@
-Hello World!
+<%- include('_header') %>
+
+<% JSON.stringify(owner) %>
+
+<h1> Home </h1>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            HARDWARE <p> <h3> <%= JSON.stringify(hardware.hardware) %>
+        </h2></p> </div></div> <br>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            DEVICE  <p> <h3> <%= JSON.stringify(device.device) %>
+        </h2></p> </div></div> <br>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            REGISTER  <p> <h3> <%= JSON.stringify(register.register) %>
+        </h2></p> </div></div> <br>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            USER  <p> <h3> <%= JSON.stringify(user.user) %>
+        </h2></p> </div></div> <br>
+    </div>
+</div>
+
+  
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            SITE  <p> <h3> <%= JSON.stringify(site.site) %>
+        </h2></p> </div></div> <br>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            ROOM <p> <h3> <%= JSON.stringify(room.room) %>  
+        </h2></p> </div></div> <br>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white " style="width: 16rem;"><div class="card-body"> 
+            DEVICE OWNER <p> <h3>  <%= JSON.stringify(owner.owner) %>
+        </h2></p> </div></div> <br>
+    </div>
+    
+</div>
+
+
+
+
+
+<%- include ('_footer') %>
