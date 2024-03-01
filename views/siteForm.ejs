@@ -1,0 +1,64 @@
+<%- include('_header') %>
+<% JSON.stringify(data) %>
+
+<h1> Site </h1>
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+    
+<% if(sitedata) { %>
+    <% JSON.stringify(sitedata) %>
+    <H3> > Site > Edit  </H3>
+    <form  action="/site/update/<%= sitedata.sid %>" method="post">
+        
+        <div class="mb-3">
+            <label  class="form-label">User</label>
+            <select class="form-control" name="userId">
+                <option>Please select</option>
+                <% if(data){ for(var i=0;i<data.length;i++){ %>
+                        <option value="<%= data[i].uid %>"<% if(data[i].uid==sitedata.userid){%> 
+                            selected
+                        <% } %>
+                        ><%= data[i].name %> (<%= data[i].email %>)</option>
+                <% } } %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Site Name</label>
+            <input type="text" class="form-control" name="sitename" value="<%= sitedata.sitename %>">
+          </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="scomment" value="<%= sitedata.scomment %>">
+        </div> 
+        <div class="text-center"> <a href="/site" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } else { %>
+    <H3> > Site > Add </H3>
+    <form  action="/site/new" method="post">
+        
+        <div class="mb-3">
+            <label  class="form-label">User</label>
+            <select class="form-control" name="userId">
+                <option>Please select</option>
+                <% if(data){ for(var i=0;i<data.length;i++){ %>
+                        <option value="<%= data[i].uid %>"><%= data[i].name %> (<%= data[i].email %>)</option>
+                <% } } %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Site Name</label>
+            <input type="text" class="form-control" name="sitename" >
+          </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="scomment" >
+        </div> 
+        <div class="text-center"> <a href="/site" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } %>
+</div></div></div>
+
+<%- include ('_footer') %>

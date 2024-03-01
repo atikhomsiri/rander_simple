@@ -1,0 +1,35 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+  
+<h1> Site </h1>
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Site Name</th>
+        <th scope="col">User Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Commit Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col">  Action <a href="/site/add" class="btn btn-primary">Add </a> </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(data){ for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].sitename %> </td>
+                <td> <%= data[i].name %> </td>
+                <td> <%= data[i].email %> </td>
+                <td> <%= data[i].commitdate.toLocaleDateString('el-GR') %> </td>
+                <td> <%= data[i].scomment %> </td>
+                <td>  
+                <a href="/site/delete/<%= data[i].sid %>" class="btn btn-danger"> Del </a>
+                <a href="/site/edit/<%= data[i].sid %>" class="btn btn-info"> Edit </a>
+                </td>
+            </tr>
+        <%  } } %>
+    </tbody>
+</table>
+<%- include ('_footer') %>

@@ -34,4 +34,10 @@ app.use("/register",registerRoute);
 const userRoute = require("./routes/userRoute");
 app.use("/user",userRoute);
 
+const siteRoute = require("./routes/siteRoute");
+app.use("/site",siteRoute);
+
+const roomRoute = require("./routes/roomRoute");
+app.use("/room",roomRoute);
+
 app.listen("3000");
