@@ -1,8 +1,14 @@
 const controller = {};
 const db = require('./db');
+const jwt = require('jsonwebtoken');
 
 controller.index =  (req,res) => { 
     res.render('index');
+}
+
+controller.logout =  (req,res) => { 
+    req.session.token = null;
+    res.redirect('/');
 }
 
 controller.login =  (req,res) => { 
@@ -10,6 +16,8 @@ controller.login =  (req,res) => {
     const password = req.body.password;
 
     if(username == "mirot" && password == "Passw0rd"){
+        const accessToken = jwt.sign({ user: username,  role: "admin" }, "thesaban.secret");
+        req.session.token = accessToken;
         res.redirect('/home')
     }else{
         res.redirect('/')
