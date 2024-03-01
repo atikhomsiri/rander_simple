@@ -1,0 +1,64 @@
+<%- include('_header') %>
+
+<h1> Register </h1>
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+
+</div>
+<% if(data) { %>
+    <% JSON.stringify(data) %>
+<H3> > Register > Edit </H3>
+    <form  action="/register/update/<%= data.rid %>" method="post">
+        <div class="mb-3">
+          <label  class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" value="<%= data.name %>">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" value="<%= data.email %>">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" value="<%= data.phone %>">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Register Date</label>
+            <input type="date" value="<%= data.registerdate.toISOString().substr(0,10) %>" class="form-control" name="registerDate" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" value="<%= data.comment %>">
+        </div> 
+        <div class="text-center"> <a href="/register" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } else { %>
+
+    <H3> > Register > Add </H3>
+    <form  action="/register/new" method="post">
+        <div class="mb-3">
+          <label  class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Register Date</label>
+            <input type="date" value="<%=new Date().toISOString().split('T')[0] %>" class="form-control" name="registerDate" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" >
+        </div> 
+        <div class="text-center"> <a href="/register" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } %>
+</div></div></div>
+
+<%- include ('_footer') %>
