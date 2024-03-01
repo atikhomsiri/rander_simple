@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="CPEiot" content="width=device-width, initial-scale=1">
+    <title> CPEiot App</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <style>
+      h1 {
+      text-align: center;
+      }
+  </style>
+  <body>
+    <% JSON.stringify(session) %>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">CPEiot</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/">Home <span class="sr-only"></span></a>
+          <a class="nav-item nav-link" href="/hardware">Hardware</a>
+          <a class="nav-item nav-link" href="/device">Device</a>
+          <a class="nav-item nav-link" href="/register">Register</a>
+          <a class="nav-item nav-link" href="/user">User</a>
+          <a class="nav-item nav-link" href="/site">Site</a>
+          <a class="nav-item nav-link" href="/room">Room</a>
+          <a class="nav-item nav-link" href="/owner">Device Owner</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-11">
+          
+    <% if(session.success==false){ %>
+      <% for(var i=0;i<session.error.errors.length;i++){ %>
+        <div class="alert alert-danger " role="alert" >
+        <%= session.error.errors[i]["msg"] %>
+      </div>
+    <% } session.success=null; } %>
+
+    <% if(session.success==true){ %>
+        <div class="alert alert-success" role="alert">
+          <%= session.topic %>
+        </div>
+        
+    <% session.success=null; session.topic=null; }   %>
