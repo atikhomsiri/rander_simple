@@ -4,8 +4,9 @@ const app = express();
 app.set("view engine","ejs");
 
 const session = require("express-session");
-app.use(session({secret:"Passw0rd"}));
-
+app.use(session({resave: true,saveUninitialized: true,secret:"Passw0rd"}));
+     
+    
 const body = require("body-parser");
 app.use(body());
 
