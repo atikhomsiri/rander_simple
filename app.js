@@ -4,8 +4,16 @@ const app = express();
 app.set("view engine","ejs");
 
 const session = require("express-session");
-app.use(session({resave: true,saveUninitialized: true,secret:"Passw0rd"}));
-     
+const MemoryStore = require('memorystore')(session)
+
+app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    secret: 'secret!'
+}))     
     
 const body = require("body-parser");
 app.use(body());
