@@ -14,11 +14,14 @@ app.use(session({
       checkPeriod: 86400000 // prune expired entries every 24h
     }),
     resave: false,
-    secret: 'secret!'
+    secret: 'secret!',
+    saveUninitialized: true
 }))     
     
 const body = require("body-parser");
-app.use(body());
+
+app.use(express.json()) //For JSON requests
+app.use(express.urlencoded({extended: true}));
 
 const UserData=[ {
   username: "admin",
