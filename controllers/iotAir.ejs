@@ -1,0 +1,35 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+ 
+
+<h1> PM 2.5 Device </h1>
+
+
+    <div class="container text-left">
+        <div class="row row-cols-2">
+          <div class="col">Hardware Name : <%= data.hwname %></div>
+          <div class="col">Owner Name : <%= data.name %></div>
+          <div class="col">Mac Address : <%= data.mac %></div>
+          <div class="col">Owner Email : <%= data.email %></div>
+          <div class="col">Site : <%= data.sitename %></div>
+          
+          <div class="col">Add Date : <%= data.adddate.toLocaleDateString() %></div>
+          <div class="col">Room : <%= data.roomname %></div>
+          <div class="col"></div>
+        </div>
+      </div>
+<% if(pm25data!=null){ %>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-success btn-lg" type="button"> RSSI : <%= valuedata  %> </button>
+    </div>
+    <% }else{ %> 
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-secondary btn-lg" type="button"> Status : OFFLINE </button>
+        </div>
+    <% } %> 
+
+<BR>
+<div class="text-center"> <a href="/owner" class="btn btn-danger"> Back </a>  </div>
+        
+<%- include ('_footer') %>

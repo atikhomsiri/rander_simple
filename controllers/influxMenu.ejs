@@ -1,0 +1,19 @@
+<%- include('_header') %>
+
+<% JSON.stringify(datahw) %>
+
+<h1>Device Owner Hardware Type List  </h1>
+
+
+  <div class="d-grid gap-2 col-6 mx-auto">
+
+<% if(datahw){ for(var i=0;i<datahw.length;i++){ %>
+    <button class="btn btn-primary" type="button" onclick="window.location.href='/owner/readinflux/<%= datahw[i].hwid %>'"><%= datahw[i].hwname %></button>
+<%  } i=0} %>
+</div>
+
+
+<BR>
+<div class="text-center"> <a href="/owner/" class="btn btn-danger"> Back </a>    </div>
+
+<%- include ('_footer') %>

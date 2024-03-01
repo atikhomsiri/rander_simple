@@ -1,0 +1,50 @@
+<%- include('_header') %>
+
+<% JSON.stringify(datam) %>
+<% JSON.stringify(datadid) %>
+<% JSON.stringify(dataemail) %>
+<% JSON.stringify(datauid) %>
+<% JSON.stringify(datapoint) %>
+<% JSON.stringify(datatype) %>
+
+<h1>Device Owner Require List  </h1>
+<div class="d-grid gap-2 col-6 mx-auto">
+  <button class="btn btn-primary active" type="button"><%= datapoint %></button>
+</div>
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Mac Address</th>
+        <th scope="col">Email</th>
+        <th scope="col">  Action </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(datam){ for(var i=0;i<datam.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= datam[i] %> </td>
+                <td> <%= dataemail[i] %> </td>
+
+                <td>  
+                  <% if(datatype==0){ %> 
+                <a href="/owner/add/<%= datadid[i] %>/<%= datauid[i] %>" class="btn btn-info"> Add </a>
+                   <% } %>
+                   <% if(datatype==1){ %> 
+                    <a href="/owner/add/<%= datadid[i] %>/<%= datauid[i] %>" class="btn btn-warning"> Change </a>
+                   <% } %>
+                   <% if(datatype==2){ %> 
+                    <button type="button" class="btn btn-secondary" disabled> Added!</button>
+                    <% } %>
+      
+                  </td>
+            </tr>
+        <%  } } %>
+    </tbody>
+</table>
+
+<div class="text-center"> <a href="/owner/menuinflux" class="btn btn-danger"> Back </a> <a href="/owner/readinflux/<%= datapointid %>" class="btn btn-primary">  Refresh </a>   </div>
+
+<%- include ('_footer') %>
