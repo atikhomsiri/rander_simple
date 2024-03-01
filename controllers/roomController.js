@@ -9,15 +9,12 @@ controller.list = (req,res) => {
     });
 };
 
-
 controller.add = (req,res) => { 
     db.query('SELECT * FROM site JOIN iotuser ON site.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid ORDER BY iotuser.uid',function(err,roomdata){
         if (err) {console.error(err);return;}
         res.render('roomForm',{roomdata:null,data:roomdata.rows,session:req.session});
     });
   };
-
-
   controller.new = async (req,res) => { 
     const error = validationResult(req);
     if(!error.isEmpty()){
@@ -33,34 +30,36 @@ controller.add = (req,res) => {
     } 
 };
 
-
-controller.delete = (req,res) => { 
+controller.delete = async (req,res) => { 
     req.session.topic="Delete room success";
     req.session.success=true;
     const { id } = req.params;
-    req.getConnection((err,conn)=>{
-        conn.query('DELETE FROM room WHERE roid= ?',[id],(err)=>{
-            if(err){res.json(err);}
-            res.redirect('/room/');
-        });
-    });
+    try {
+        const value =  await db.query('DELETE FROM room WHERE roid= $1',[id], (err) => {
+            if(err){console.error(err);return;}
+          });    
+    } catch (err) {
+        let error = {msg:"Error Cannot Delete Room!", type:'Delete',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+    } finally {
+        res.redirect('/room/');
+    } 
 };
 
-
-controller.edit = (req,res) => { 
+controller.edit = async (req,res) => { 
     const { id } = req.params;
-    req.getConnection((err,conn)=>{
-    conn.query('SELECT * FROM room WHERE roid= ?',[id],(err,roomdata)=>{
-        conn.query('SELECT * FROM site JOIN user ON site.userId=user.uid JOIN register ON user.registerId=register.rid',(err,sitedata)=>{
-            if(err){res.json(err);}
-            res.render('roomForm',{roomdata:roomdata[0],data:sitedata,session:req.session});
-            });
-        });
+    const roomdata =  await db.query('SELECT * FROM room WHERE roid= $1',[id], (err) => {
+        if(err){res.json(err);}
+    });
+    db.query('SELECT * FROM site JOIN iotuser ON site.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid',function(err,sitedata){
+        if (err) {console.error(err);return;}
+        res.render('roomForm',{roomdata:roomdata.rows[0],data:sitedata.rows,session:req.session}); 
     });
 };
 
-
-controller.update = (req,res) => { 
+controller.update = async (req,res) => { 
     const { id } = req.params;
     const data = req.body;
     const error = validationResult(req);
@@ -71,12 +70,10 @@ controller.update = (req,res) => {
     }else{
         req.session.topic="Edit room success";
         req.session.success=true;
-        req.getConnection((err,conn)=>{
-            conn.query('UPDATE room SET ? WHERE roid= ?',[data,id],(err)=>{
-                if(err){res.json(err);}
-                res.redirect('/room/');
-            });
-        });
+        const value =  await db.query('UPDATE room SET siteid=$1,roomname=$2,rcomment=$3 WHERE roid= $4',[data.siteId,data.roomname,data.rcomment,id], (err) => {
+            if(err){res.json(err);}
+          });
+          res.redirect('/room/');  
     }
     
 };

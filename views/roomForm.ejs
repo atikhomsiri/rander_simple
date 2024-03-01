@@ -15,7 +15,7 @@
             <select class="form-control" name="siteId">
                 <option>Please select</option>
                 <% if(data){ for(var i=0;i<data.length;i++){ %>
-                        <option value="<%= data[i].sid %>" <% if(data[i].sid==roomdata.siteId){%> 
+                        <option value="<%= data[i].sid %>" <% if(data[i].sid==roomdata.siteid){%> 
                             selected
                         <% } %>
                         ><%= data[i].sitename %> [<%= data[i].name %>(<%= data[i].email %>)]</option>
