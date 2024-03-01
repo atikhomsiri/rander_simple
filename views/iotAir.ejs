@@ -1,6 +1,6 @@
 <%- include('_header') %>
 
-<% JSON.stringify(data) %>
+<%= JSON.stringify(pm25data) %>
  
 
 <h1> PM 2.5 Device </h1>
@@ -21,7 +21,7 @@
       </div>
 <% if(pm25data!=null){ %>
     <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-success btn-lg" type="button"> RSSI : <%= valuedata  %> </button>
+        <button class="btn btn-success btn-lg" type="button"> RSSI : <%= pm25data  %> </button>
     </div>
     <% }else{ %> 
         <div class="d-grid gap-2 col-6 mx-auto">
