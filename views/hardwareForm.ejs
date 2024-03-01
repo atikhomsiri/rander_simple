@@ -1,0 +1,73 @@
+<%- include('_header') %>
+
+<% JSON.stringify(session) %>
+
+<h1> Hardware </h1>
+
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+
+<% if(data) { %>
+    <% JSON.stringify(data) %>
+    <H3> > Hardware > Edit  </H3>
+    <form  action="/hardware/update/<%= data.hwid %>" method="post">
+    <div class="mb-3">
+      <label  class="form-label">Name</label>
+      <input type="text" class="form-control" name="hwname" value="<%= data.hwname %>">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Datapoint</label>
+        <input type="text" class="form-control" name="datapoint" value="<%= data.datapoint %>">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">CPU</label>
+        <input type="text" class="form-control" name="cpu" value="<%= data.cpu %>">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">INPUT</label>
+        <input type="text" class="form-control" name="input" value="<%= data.input %>" >
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">OUTPUT</label>
+        <input type="text" class="form-control" name="output" value="<%= data.output %>">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Comment</label>
+        <input type="text" class="form-control" name="comment" value="<%= data.hcomment %>">
+    </div> 
+    <div class="text-center"> <a href="/hardware" class="btn btn-danger"> Back </a>  <button type="submit" class="btn btn-primary center">Submit</button> </div>
+  </form>
+  
+<% } else { %>
+    <H3> > Hardware > Add </H3>
+    <form  action="/hardware/new" method="post">
+        <div class="mb-3">
+          <label  class="form-label">Name</label>
+          <input type="text" class="form-control" name="hwname" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Datapoint</label>
+            <input type="text" class="form-control" name="datapoint" >
+          </div>
+        <div class="mb-3">
+            <label  class="form-label">CPU</label>
+            <input type="text" class="form-control" name="cpu" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">INPUT</label>
+            <input type="text" class="form-control" name="input" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">OUTPUT</label>
+            <input type="text" class="form-control" name="output" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" >
+        </div> 
+        <div class="text-center"> <a href="/hardware" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } %>
+</div></div></div>
+
+<%- include ('_footer') %>

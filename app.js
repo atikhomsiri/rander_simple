@@ -22,7 +22,7 @@ app.use(body());
 const path = require('path')
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
-const iotRoute = require("./routes/iotRoute");
-app.use("/",iotRoute);
+const hardwareRoute = require("./routes/hardwareRoute");
+app.use("/hardware",hardwareRoute);
 
 app.listen("3000");

@@ -1,0 +1,42 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+
+<h1> Hardware </h1>
+
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Name</th>
+        <th scope="col">Datapoint</th>
+        <th scope="col">CPU</th>
+        <th scope="col">INPUT</th>
+        <th scope="col">OUTPUT</th>
+        <th scope="col">Comment</th>
+        <th scope="col">  Action <a href="/hardware/add" class="btn btn-primary"> Add </a>  </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(data){ for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].hwname %> </td>
+                <td> <%= data[i].datapoint %> </td>
+                <td> <%= data[i].cpu %> </td>
+                <td> <%= data[i].input %> </td>
+                <td> <%= data[i].output %> </td>
+                <td> <%= data[i].hcomment %> </td>
+                <td>  
+                  <a href="/hardware/delete/<%= data[i].hwid %>" class="btn btn-danger"> Del </a>
+                <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"> Edit </a>
+                
+                </td>
+            </tr>
+        <%  } } %>
+        
+    </tbody>
+  </table>
+
+<%- include ('_footer') %>
