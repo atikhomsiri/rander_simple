@@ -5,7 +5,7 @@
 <% JSON.stringify(dataemail) %>
 <% JSON.stringify(datauid) %>
 <% JSON.stringify(datapoint) %>
-<% JSON.stringify(datatype) %>
+<%= JSON.stringify(datatype) %>
 
 <h1>Device Owner Require List  </h1>
 <div class="d-grid gap-2 col-6 mx-auto">
@@ -29,13 +29,13 @@
                 <td> <%= dataemail[i] %> </td>
 
                 <td>  
-                  <% if(datatype==0){ %> 
+                  <% if(datatype[i]==0){ %> 
                 <a href="/owner/add/<%= datadid[i] %>/<%= datauid[i] %>" class="btn btn-info"> Add </a>
                    <% } %>
-                   <% if(datatype==1){ %> 
+                   <% if(datatype[i]==1){ %> 
                     <a href="/owner/add/<%= datadid[i] %>/<%= datauid[i] %>" class="btn btn-warning"> Change </a>
                    <% } %>
-                   <% if(datatype==2){ %> 
+                   <% if(datatype[i]==2){ %> 
                     <button type="button" class="btn btn-secondary" disabled> Added!</button>
                     <% } %>
       
