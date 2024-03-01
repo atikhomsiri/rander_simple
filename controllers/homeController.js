@@ -10,9 +10,9 @@ controller.login =  (req,res) => {
     const password = req.body.password;
 
     if(username == "mirot" && password == "Passw0rd"){
-        res.send("OK")
+        res.redirect('/home')
     }else{
-        res.send("ERROR")
+        res.redirect('/')
     }
 }
 
