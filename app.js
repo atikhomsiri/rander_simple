@@ -4,16 +4,7 @@ const app = express();
 app.set("view engine","ejs");
 
 const session = require("express-session");
-
-app.use(session({
-    cookie:{
-        secure: true,
-        maxAge:60000
-           },
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: false
-}));
+app.use(session({secret:"Passw0rd"}));
 
 const body = require("body-parser");
 app.use(body());
