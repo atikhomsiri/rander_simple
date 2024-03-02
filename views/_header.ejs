@@ -5,6 +5,9 @@
     <meta name="CPEiot" content="width=device-width, initial-scale=1">
     <title> CPEiot App</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   </head>
   <style>
       h1 {
@@ -13,23 +16,37 @@
   </style>
   <body>
     <% JSON.stringify(session) %>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">CPEiot</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+ 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" >CPEiot</a>
+      <!-- Toggle Btn -->
+      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- SideBar -->
+        <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <!-- SideBar Header -->
+            <div class="offcanvas-header text-white border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Thesaban.org</h5>
+            <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/home">Home <span class="sr-only"></span></a>
-          <a class="nav-item nav-link" href="/hardware">Hardware</a>
-          <a class="nav-item nav-link" href="/device">Device</a>
-          <a class="nav-item nav-link" href="/register">Register</a>
-          <a class="nav-item nav-link" href="/user">User</a>
-          <a class="nav-item nav-link" href="/site">Site</a>
-          <a class="nav-item nav-link" href="/room">Room</a>
-          <a class="nav-item nav-link" href="/owner">Device Owner</a>
-          <a class="nav-item nav-link" href="/logout">Logout</a>
+          <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+            <li class="nav-item mx-2"><a class="nav-item nav-link" href="/home">Home <span class="sr-only"></span></a></li>
+              <li class="nav-item mx-2"><a class="nav-item nav-link" href="/hardware">Hardware</a></li>
+                <li class="nav-item mx-2"><a class="nav-item nav-link" href="/device">Device</a></li>
+                  <li class="nav-item mx-2"><a class="nav-item nav-link" href="/register">Register</a></li>
+                    <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user">User</a></li>
+                      <li class="nav-item mx-2"><a class="nav-item nav-link" href="/site">Site</a></li>
+                        <li class="nav-item mx-2"><a class="nav-item nav-link" href="/room">Room</a></li>
+                          <li class="nav-item mx-2"><a class="nav-item nav-link" href="/owner">Device Owner</a></li>
+                           
+          </ul>
+          <!-- Logout -->
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <a href="/logout" class="text-white text-decoration-none px-3 py-1 bg-warning rounded-4"> Logout</a>
+            </div>
         </div>
       </div>
     </nav>

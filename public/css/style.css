@@ -1,0 +1,5 @@
+@media(max-width: 990px) {
+    .sidebar{
+        background-color: rgba(0, 98, 255, 0.847);
+    }
+}
