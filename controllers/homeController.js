@@ -20,7 +20,14 @@ controller.login =  (req,res) => {
         req.session.token = accessToken;
         res.redirect('/home')
     }else{
-        res.redirect('/')
+        if(username == "user" && password == "digit"){
+            const accessToken = jwt.sign({ user: username,  role: "user" }, "thesaban.secret");
+            req.session.token = accessToken;
+
+            res.redirect('/user/home')
+        }else{
+            res.redirect('/')
+        }
     }
 }
 
@@ -45,5 +52,5 @@ controller.home =  (req,res) => {
    // res.render('home',{hardware:hardwaredata[0],device:devicedata[0],register:registerdata[0],user:userdata[0],site:sitedata[0],room:roomdata[0],owner:ownerdata[0],session:req.session});
    
 };
-
+  
 module.exports = controller;

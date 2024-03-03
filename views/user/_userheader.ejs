@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="CPEiot" content="width=device-width, initial-scale=1">
+    <title> CPEiot App</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  </head>
+  <style>
+      h1 {
+      text-align: center;
+      }
+  </style>
+  <body>
+ 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" >CPEiot</a>
+      <!-- Toggle Btn -->
+      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- SideBar -->
+        <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <!-- SideBar Header -->
+            <div class="offcanvas-header text-white border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Thesaban.org</h5>
+            <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+        <div class="navbar-nav">
+          <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+            <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user/home">Home <span class="sr-only"></span></a></li>
+                      <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user/site">Site</a></li>
+                        <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user/room">Room</a></li>
+                        <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user/add">Add Device</a></li>
+                          <li class="nav-item mx-2"><a class="nav-item nav-link" href="/user/owner">Device </a></li>
+                           
+          </ul>
+          <!-- Logout -->
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <a href="/user/logout" class="text-white text-decoration-none px-3 py-1 bg-warning rounded-4"> Logout</a>
+            </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-11">
+       

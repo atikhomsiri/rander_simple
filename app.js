@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-
-
 app.set("view engine","ejs");
 
 const session = require("express-session");
@@ -61,5 +59,21 @@ app.use("/",homeRoute);
 
 const iotRoute = require("./routes/iotRoute");
 app.use("/iot",iotRoute);
+
+// User Mode
+const userHomeRoute = require("./routes/userHomeRoute");
+app.use("/user",userHomeRoute);
+
+const userSiteRoute = require("./routes/userSiteRoute");
+app.use("/user/site",userSiteRoute);
+
+const userRoomRoute = require("./routes/userRoomRoute");
+app.use("/user/room",userRoomRoute);
+
+const userOwnerRoute = require("./routes/userOwnerRoute");
+app.use("/user/owner",userOwnerRoute);
+
+const userAddRoute = require("./routes/userAddRoute");
+app.use("/user/add",userAddRoute);
 
 app.listen("3000");

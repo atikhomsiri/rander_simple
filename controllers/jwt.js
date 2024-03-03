@@ -7,6 +7,7 @@ try {
  const decoded = jwt.verify(token, 'thesaban.secret');
  req.session.user = decoded.user;
  req.session.role = decoded.role;
+ if(decoded.role!="admin") res.status(401).json({ error: 'Access denied' });
  next();
  } catch (error) {
  res.status(401).json({ error: 'Invalid token' });
