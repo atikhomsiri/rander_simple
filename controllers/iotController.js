@@ -19,7 +19,7 @@ controller.esp01 = async (req,res) => {
         var value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -3m)
+        |> range(start: -1m)
         |> filter(fn: (r) => r._measurement == "esp01")
         |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
         |> filter(fn: (r) => r["_field"] == "rssi")
@@ -58,7 +58,7 @@ controller.nodemcu = async (req,res) => {
         var value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -3m)
+        |> range(start: -1m)
         |> filter(fn: (r) => r._measurement == "nodemcu")
         |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
         |> filter(fn: (r) => r["_field"] == "rssi")
@@ -95,7 +95,7 @@ controller.airpollution = async (req,res) => {
         var pm25value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -3m)
+        |> range(start: -1m)
         |> filter(fn: (r) => r._measurement == "airpollution")
         |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
         |> filter(fn: (r) => r["_field"] == "pm25")
@@ -134,7 +134,7 @@ controller.sos = async (req,res) => {
     var sosvalue=null;
     let queryClient = client.getQueryApi(org)
     let fluxQuery = `from(bucket: "`+bucket+`")
-    |> range(start: -3m)
+    |> range(start: -1m)
     |> filter(fn: (r) => r._measurement == "sos")
     |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
     |> filter(fn: (r) => r["_field"] == "sosvalue")
