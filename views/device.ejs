@@ -12,7 +12,8 @@
         <th scope="col">Hardware</th>
         <th scope="col">Build Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/device/add" class="btn btn-primary"> Add </a>  </th>
+        <th scope="col">Action </th>
+        <th scope="col">  <a href="/device/add" class="btn btn-primary"> Add </a>  </th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +25,10 @@
                 <td> <%= data[i].builddate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].comment %> </td>
                 <td>  
-                <a href="/device/delete/<%= data[i].did %>" class="btn btn-danger"> Del </a>
+                  <form method="GET" action="/device/delete/<%= data[i].did %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+               
                 <a href="/device/edit/<%= data[i].did %>" class="btn btn-info"> Edit </a>
                
                 </td>

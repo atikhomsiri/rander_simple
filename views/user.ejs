@@ -12,7 +12,9 @@
         <th scope="col">Register Date</th>
         <th scope="col">Commit Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/register/" class="btn btn-primary">Add </a> </th>
+        <th scope="col"> Action</th>
+       
+        <th scope="col">  <a href="/register/" class="btn btn-primary">Add </a> </th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +28,10 @@
                 <td> <%= data[i].commitdate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].ucomment %> </td>
                 <td>  
-                <a href="/user/delete/<%= data[i].uid %>" class="btn btn-danger"> Del </a>
+                  <form method="GET" action="/user/delete/<%= data[i].uid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+               
                 <a href="/site/find/<%= data[i].uid %>" class="btn btn-success"> Site </a>
                 </td>
             </tr>

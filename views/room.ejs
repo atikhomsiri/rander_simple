@@ -12,7 +12,9 @@
         <th scope="col">User Name (Email) </th>
         <th scope="col">Commit Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/room/add" class="btn btn-primary">Add </a> </th>
+        <th scope="col">  Action</th>
+        
+        <th scope="col"> <a href="/room/add" class="btn btn-primary">Add </a> </th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +28,10 @@
                 <td> <%= data[i].commitdate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].rcomment %> </td>
                 <td>  
-                <a href="/room/delete/<%= data[i].roid %>" class="btn btn-danger"> Del </a>
+                  <form method="GET" action="/room/delete/<%= data[i].roid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+                
                 <a href="/room/edit/<%= data[i].roid %>" class="btn btn-info"> Edit </a>
                 </td>
             </tr>

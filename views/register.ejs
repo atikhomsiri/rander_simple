@@ -12,7 +12,8 @@
         <th scope="col">Phone</th>
         <th scope="col">Register Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/register/add" class="btn btn-primary"> Add </a>  </th>
+        <th scope="col">Action</th>
+        <th scope="col">  <a href="/register/add" class="btn btn-primary"> Add </a>  </th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +26,10 @@
                 <td> <%= data[i].registerdate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].comment %> </td>
                 <td>  
-                <a href="/register/delete/<%= data[i].rid %>" class="btn btn-danger"> Del </a>
+                  <form method="GET" action="/register/delete/<%= data[i].rid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+               
                 <a href="/register/edit/<%= data[i].rid %>" class="btn btn-info"> Edit </a>
                 
                 <% if(!data[i].uid){ %> <a href="/user/new/<%= data[i].rid %>" class="btn btn-success"> Admit </a> <% } %>

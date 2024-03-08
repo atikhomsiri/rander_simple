@@ -1,7 +1,6 @@
 <%- include('_header') %>
 
 <% JSON.stringify(data) %>
-
 <h1 > Hardware </h1>
 
 
@@ -15,7 +14,8 @@
         <th scope="col">INPUT</th>
         <th scope="col">OUTPUT</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/hardware/add" class="btn btn-primary"> Add </a>  </th>
+        <th scope="col"> Action</th>
+        <th scope="col">   <a href="/hardware/add" class="btn btn-primary"> Add </a>  </th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +29,9 @@
                 <td> <%= data[i].output %> </td>
                 <td> <%= data[i].hcomment %> </td>
                 <td>  
-                  <a href="/hardware/delete/<%= data[i].hwid %>" class="btn btn-danger"> Del </a>
+  <form method="GET" action="/hardware/delete/<%= data[i].hwid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+              </td>
+              <td>
                 <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"> Edit </a>
                 
                 </td>

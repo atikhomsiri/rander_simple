@@ -17,7 +17,8 @@
         <th scope="col">Site</th>
         <th scope="col">Room</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/owner/menuinflux" class="btn btn-primary">Add </a> </th>
+        <th scope="col">Action</th>
+        <th scope="col">  <a href="/owner/menuinflux" class="btn btn-primary">Add </a> </th>
       </tr>
 
       <% if(data){ for(var i=0;i<data.length;i++){ %>
@@ -34,10 +35,11 @@
             <td> <% if(!data[i].sitename) { %> <a href="/owner/site/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-warning"> Set </a> <% }else{ %><%= data[i].sitename %> <a href="/owner/clearsite/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Clear </a> <% } %> </td>
             <td> <% if(!data[i].roomname) { %> <a href="/owner/room/<%= data[i].deviceid %>/<%= data[i].uid %>/<%= data[i].sid %>" class="btn btn-warning"> Set </a> <% }else{ %> <%= data[i].roomname %> <a href="/owner/clearroom/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Clear </a> <% } %>  </td>
             <td> <%= data[i].ownerComment %> </td>
-            
             <td>  
-            <a href="/owner/delete/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-danger"> Del </a>
-            <a href="/iot/<%= data[i].datapoint %>/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-success"> Show </a>
+              <form method="GET" action="/owner/delete/<%= data[i].deviceid %>/<%= data[i].uid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+            </td>            
+            <td>  
+             <a href="/iot/<%= data[i].datapoint %>/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-success"> Show </a>
             </td>
         </tr>
     <%  } } %>

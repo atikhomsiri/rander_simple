@@ -12,7 +12,8 @@
         <th scope="col">Email</th>
         <th scope="col">Commit Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">  Action <a href="/site/add" class="btn btn-primary">Add </a> </th>
+        <th scope="col"> Action</th>
+        <th scope="col"> <a href="/site/add" class="btn btn-primary">Add </a> </th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +26,10 @@
                 <td> <%= data[i].commitdate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].scomment %> </td>
                 <td>  
-                <a href="/site/delete/<%= data[i].sid %>" class="btn btn-danger"> Del </a>
+                  <form method="GET" action="/site/delete/<%= data[i].sid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+               
                 <a href="/site/edit/<%= data[i].sid %>" class="btn btn-info"> Edit </a>
                 </td>
             </tr>
