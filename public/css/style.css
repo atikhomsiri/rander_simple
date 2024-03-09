@@ -2,4 +2,92 @@
     .sidebar{
         background-color: rgba(0, 98, 255, 0.847);
     }
+    
+    .tablelist thead{
+        display: none;
+    }
+    .tablelist, .tablelist tbody, .tablelist tr,.tablelist td{
+        display: block;
+        width: 100%;
+        
+    }
+    .tablelist tr{
+        margin-bottom: 15px;
+    }
+    .tablelist tbody tr td{
+        text-align:  center;
+        padding-left: 50%;
+        position: relative;
+    }
+    .tablelist td::before{
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15%;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: left;
+    }
+}
+
+
+.table-container{
+    padding: 0 10%;
+}
+
+.heading{
+font-size: 40px;
+text-align: center;
+margin-bottom: 40px;
+}
+
+.tablelist{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tablelist{
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.35px;
+    opacity: 1;
+    padding: 12px;
+    vertical-align: top;
+    text-align: center;
+    border: 1px solid;    
+}
+.tablelist tbody tr th{
+font-size: 14;
+font-weight: 600;
+letter-spacing: 0.35px;
+opacity: 1;
+padding: 12px;
+vertical-align: top;
+border: 1px solid transparent;
+}
+
+.tablelist tbody tr td{
+    font-size: 14px;
+    letter-spacing: 0.35px;
+    font-weight: normal;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid;
+}
+
+.tablelist tr td .editbtn{
+    width: 100px;
+    text-decoration: none;
+    line-height: 30px;
+    display: inline-block;
+    background-color: rgb(2, 31, 68);
+    font-weight: medium;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 14px;
+    opacity: 1;
 }

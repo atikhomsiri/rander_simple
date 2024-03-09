@@ -15,7 +15,7 @@
         <th scope="col">OUTPUT</th>
         <th scope="col">Comment</th>
         <th scope="col"> Action</th>
-        <th scope="col">   <a href="/hardware/add" class="btn btn-primary"> Add </a>  </th>
+        <th scope="col">   <a href="/hardware/add" class="btn btn-primary" style="height:40px;width:80px"> Add </a>  </th>
       </tr>
     </thead>
     <tbody>
@@ -29,10 +29,10 @@
                 <td> <%= data[i].output %> </td>
                 <td> <%= data[i].hcomment %> </td>
                 <td>  
-  <form method="GET" action="/hardware/delete/<%= data[i].hwid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+  <form method="GET" action="/hardware/delete/<%= data[i].hwid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" style="height:40px;width:80px" type="submit" value="Del"/> </form>
               </td>
               <td>
-                <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"> Edit </a>
+                <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"  style="height:40px;width:80px"> Edit </a>
                 
                 </td>
             </tr>
@@ -40,5 +40,51 @@
         
     </tbody>
   </table>
+
+  <div class="table-container">
+    <h1 class="heading"> Responsive Table</h1>
+    <table class="tablelist">
+      <thead>
+        <tr>
+          <th> Test 1</th>
+          <th> Test 2</th>
+          <th> Test 3</th>
+          <th> Test 4</th>
+          <th> Test 5</th>
+          <th> Test 6</th>
+          <th> Test 7</th>
+          <th> Test 8</th>
+        </tr>
+        <tbody>
+          <tr>
+            <td data-label="11"> Data 1</td>
+            <td data-label="22"> Data 2</td>
+            <td data-label="33"> Data 3</td>
+            <td data-label="44"> Data 4</td>
+            <td data-label="55"> Data 5</td>
+            <td data-label="66"> Data 6</td>
+            <td data-label="77"> Data 7</td>
+            <td> 
+              <a class="editbtn" href="#" class="btn btn-info"> Edit </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td> Data 1</td>
+            <td> Data 2</td>
+            <td> Data 3</td>
+            <td> Data 4</td>
+            <td> Data 5</td>
+            <td> Data 6</td>
+            <td> Data 7</td>
+            <td> 
+              <a class="editbtn" href="#" class="btn btn-info"> Edit </a>
+            </td>
+          </tr>
+
+        </tbody>
+      </thead>
+    </table>
+  </div>
 
 <%- include ('_footer') %>
