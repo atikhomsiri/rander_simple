@@ -19,16 +19,22 @@
           <div class="col"></div>
         </div>
       </div>
-<% if(countdata!=null){ %>
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-success btn-lg" type="button"> People Count : <%= countdata  %> </button>
-    </div>
-    <% }else{ %> 
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-secondary btn-lg" type="button"> Status : OFFLINE </button>
-        </div>
-    <% } %> 
+      <div class="row">
+        <div class="col-sm-10 ">
 
+<% if(countdata!=null){ %>
+    <div class="card bg-success text-white mx-auto" style="width: 16rem;"><div class="card-body"> 
+        People Count <p> <h3> People Count : <%= countdata  %>
+    </h2></p> </div></div> <br>
+</div>
+
+    <% }else{ %> 
+        <div class="card bg-secondary text-white " style="width: 16rem;"><div class="card-body"> 
+            Particulate Matter  <p> <h3> Status : OFFLINE 
+        </h2></p> </div></div> <br>
+    </div>
+    <% } %> 
+</div>
 <BR>
 <div class="text-center"> <a href="/owner" class="btn btn-danger"> Back </a>  </div>
         
