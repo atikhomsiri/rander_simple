@@ -32,7 +32,7 @@
                
                 <a href="/register/edit/<%= data[i].rid %>" class="btn btn-info"> Edit </a>
                 
-                <% if(!data[i].uid){ %> <a href="/user/new/<%= data[i].rid %>" class="btn btn-success"> Admit </a> <% } %>
+                <% if(!data[i].uid){ %> <a href="/user/add/<%= data[i].rid %>" class="btn btn-success"> Admit </a> <% } %>
                 </td>
             </tr>
         <%  } } %>

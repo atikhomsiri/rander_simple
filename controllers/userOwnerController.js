@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 const db = require('./db');
 
 controller.list = (req,res) => { 
-        res.render('user/userowner');
+        res.render('user/userowner',{session:req.session});
   
 };
 

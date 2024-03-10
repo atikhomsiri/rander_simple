@@ -6,7 +6,8 @@ const validator = require("../controllers/userValidator");
 const verifyToken =require('../controllers/jwt');
 
 router.get('/',verifyToken,Controller.list);
-router.get('/new/:id',verifyToken,Controller.new);
+router.post('/new/:id',verifyToken,validator.new,Controller.new);
+router.get('/add/:id',verifyToken,Controller.add);
 router.get('/delete/:id',verifyToken,Controller.delete);
 
 

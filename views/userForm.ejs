@@ -1,0 +1,49 @@
+<%- include('_header') %>
+<% JSON.stringify(data) %>
+
+<h1> Add User </h1>
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+
+</div>
+<% if(data) { %>
+    <% JSON.stringify(data) %>
+<H3> > Register > Add User </H3>
+    
+        <div class="mb-3">
+          <label  class="form-label">Name</label> 
+          <input type="text" class="form-control" name="name" value="<%= data.name %> " readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" value="<%= data.email %>" readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" value="<%= data.phone %>" readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Register Date</label>
+            <input type="date" value="<%= data.registerdate.toISOString().substr(0,10) %>" class="form-control" name="registerDate" readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" value="<%= data.comment %>" readonly>
+        </div> 
+        <form  action="/user/new/<%= data.rid %>" method="post">
+            <div class="mb-3">
+                <label  class="form-label"> Password * </label>
+                <input type="password" class="form-control" name="password1" >
+            </div>  
+            <div class="mb-3">
+                <label  class="form-label"> Confirm Password * </label>
+                <input type="password" class="form-control" name="password2" >
+            </div>  
+        
+        <div class="text-center"> <a href="/register" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } %>
+
+</div></div></div>
+
+<%- include ('_footer') %>

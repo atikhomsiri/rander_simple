@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
         try {
      const decoded = jwt.verify(token, 'thesaban.secret');
      req.session.user = decoded.user;
+     req.session.uid = decoded.uid;
      req.session.role = decoded.role;
         if(!decoded.user) res.status(401).json({ error: 'Access denied' });
         if(decoded.role!="user") res.status(401).json({ error: 'Access denied' });

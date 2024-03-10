@@ -3,7 +3,8 @@ const db = require('./db');
 const jwt = require('jsonwebtoken');
 
 controller.home =  (req,res) => { 
-    res.render('./user/userhome');
+    
+    res.render('./user/userhome',{session:req.session});
 }
 
 controller.logout =  (req,res) => { 
