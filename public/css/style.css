@@ -2,7 +2,7 @@
     .sidebar{
         background-color: rgba(0, 98, 255, 0.847);
     }
-    
+
     .tablelist thead{
         display: none;
     }
@@ -30,7 +30,10 @@
         text-align: left;
     }
 }
-
+.btn{
+    height:40px;
+    width:80px;
+}
 
 .table-container{
     padding: 0 10%;

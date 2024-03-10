@@ -15,7 +15,7 @@
         <th scope="col">OUTPUT</th>
         <th scope="col">Comment</th>
         <th scope="col"> Action</th>
-        <th scope="col">   <a href="/hardware/add" class="btn btn-primary" style="height:40px;width:80px"> Add </a>  </th>
+        <th scope="col">   <a href="/hardware/add" class="btn btn-primary" > Add </a>  </th>
       </tr>
     </thead>
     <tbody>
@@ -29,10 +29,10 @@
                 <td> <%= data[i].output %> </td>
                 <td> <%= data[i].hcomment %> </td>
                 <td>  
-  <form method="GET" action="/hardware/delete/<%= data[i].hwid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" style="height:40px;width:80px" type="submit" value="Del"/> </form>
+  <form method="GET" action="/hardware/delete/<%= data[i].hwid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
               </td>
               <td>
-                <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"  style="height:40px;width:80px"> Edit </a>
+                <a href="/hardware/edit/<%= data[i].hwid %>" class="btn btn-info"  > Edit </a>
                 
                 </td>
             </tr>
