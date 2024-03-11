@@ -2,6 +2,36 @@
 
 
 <h1> Site </h1>
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Site Name</th>
+        <th scope="col">Commit Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col"> Action</th>
+        <th scope="col"> <a href="/user/site/add" class="btn btn-primary">Add </a> </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(data){ for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].sitename %> </td>
+                <td> <%= data[i].commitdate.toLocaleDateString('el-GR') %> </td>
+                <td> <%= data[i].scomment %> </td>
+                <td>  
+                  <form method="GET" action="/user/site/delete/<%= data[i].sid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+               
+                <a href="/user/site/edit/<%= data[i].sid %>" class="btn btn-info"> Edit </a>
+                </td>
+            </tr>
+        <%  } } %>
+    </tbody>
+</table>
+
 
 
 <%- include('_userfooter') %>

@@ -15,7 +15,7 @@
       }
   </style>
   <body>
-    <% JSON.stringify(session) %>
+   
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" >CPEiot</a>
       <!-- Toggle Btn -->
@@ -51,3 +51,17 @@
       <div class="row">
         <div class="col-md-11">
        
+          <%= JSON.stringify(session) %>       
+          <% if(session.success==false){ %>
+            <% for(var i=0;i<session.error.errors.length;i++){ %>
+              <div class="alert alert-danger " role="alert" >
+              <%= session.error.errors[i]["msg"] %>
+            </div>
+          <% } session.success=null; } %>
+      
+          <% if(session.success==true){ %>
+              <div class="alert alert-success" role="alert">
+                <%= session.topic %>
+              </div>
+              
+          <% session.success=null; session.topic=null; }   %>

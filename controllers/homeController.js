@@ -25,15 +25,17 @@ controller.login =  async (req,res) => {
         const value =  await db.query('SELECT * FROM register JOIN iotuser ON register.rid=iotuser.registerid WHERE email= $1',[username], (err) => {
             if(err){res.json(err);}
         });
-        const match = await bcrypt.compare(password,value.rows[0].hash);   
-        if(match){
-            const uid= value.rows[0].uid;
-            const accessToken = jwt.sign({ user: username, uid: uid,  role: "user" }, "thesaban.secret");
-            req.session.token = accessToken;
+        if(value.rows[0].uid>0){
+            const match = await bcrypt.compare(password,value.rows[0].hash);   
+            if(match){
+                const uid= value.rows[0].uid;
+                const accessToken = jwt.sign({ user: username, uid: uid,  role: "user" }, "thesaban.secret");
+                req.session.token = accessToken;
 
-            res.redirect('/user/home')
-        }else{
-            res.redirect('/')
+                res.redirect('/user/home')
+            }else{
+                res.redirect('/')
+            }
         }
     }
 }
