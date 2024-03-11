@@ -1,5 +1,24 @@
 <%- include('_userheader') %>
 <h1> Site </h1>
+<% if(sitedata) { %>
+  
+  <H3> > Site > Edit  </H3>
+  <form  action="/user/site/update/<%= sitedata.sid %>" method="post">
+      
+      
+      <div class="mb-3">
+          <label  class="form-label">Site Name</label>
+          <input type="text" class="form-control" name="sitename" value="<%= sitedata.sitename %>">
+        </div>
+
+      <div class="mb-3">
+          <label  class="form-label">Comment</label>
+          <input type="text" class="form-control" name="scomment" value="<%= sitedata.scomment %>">
+      </div> 
+      <div class="text-center"> <a href="/user/site" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+      
+    </form>
+<% } else { %>
 
 <H3> > Site > Add </H3>
     <form  action="/user/site/new" method="post">
@@ -14,7 +33,7 @@
         <div class="text-center"> <a href="/user/site" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
         
       </form>
-
+<% } %>
 
 
 <%- include('_userfooter') %>
