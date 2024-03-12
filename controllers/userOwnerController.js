@@ -2,9 +2,13 @@ const controller = {};
 const { validationResult } = require("express-validator");
 const db = require('./db');
 
-controller.list = (req,res) => { 
-        res.render('user/userowner',{session:req.session});
-  
+controller.list = async (req,res) => { 
+    const uid = req.session.uid;
+        const value =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE uid=$1',[uid], (err) => {
+                if(err){res.json(err);}
+        });
+    
+    res.render('user/userowner',{data:value.rows,session:req.session});  
 };
 
 controller.menuinflux = (req,res) => { 

@@ -3,5 +3,44 @@
 
 <h1> Device </h1>
 
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Device Mac</th>
+        <th scope="col">Hardware</th> 
+        <th scope="col">Add Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Site</th>
+        <th scope="col">Room</th>
+        <th scope="col">Action</th>
+        <th scope="col">  </th>
+      </tr>
+  </thead>
+  <tbody>
+      <% if(data){ for(var i=0;i<data.length;i++){ %>
+        <tr>
+            <td> <%= (i+1) %> </td>
+            <td> <%= data[i].mac %> </td>        
+            <td> <%= data[i].hwname %> </td>        
+            <td> <%= data[i].adddate.toLocaleDateString('el-GR') %> </td>   
+            <td> <%= data[i].ownerComment %> </td> 
+            <td> <% if(!data[i].sitename) { %> <a href="/user/owner/site/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-info"> Set </a> <% }else{ %><%= data[i].sitename %> <a href="/user/owner/clearsite/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-warning"> Clear </a> <% } %> </td>
+            <td> <% if(!data[i].roomname) { %> <a href="/user/owner/room/<%= data[i].deviceid %>/<%= data[i].uid %>/<%= data[i].sid %>" class="btn btn-info"> Set </a> <% }else{ %> <%= data[i].roomname %> <a href="/user/owner/clearroom/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-warning"> Clear </a> <% } %>  </td>
+            
+            <td>  
+              <form method="GET" action="/user/owner/delete/<%= data[i].deviceid %>/<%= data[i].uid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+            </td>            
+            <td>  
+             <a href="/user/iot/<%= data[i].datapoint %>/<%= data[i].deviceid %>/<%= data[i].uid %>" class="btn btn-success"> Show </a>
+            </td>
+        </tr>
+    <%  } } %>
+
+
+    </thead>
+  </tbody>
+</table>
+
 
 <%- include('_userfooter') %>

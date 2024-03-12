@@ -67,7 +67,6 @@ controller.delete = async (req,res) => {
         const sitedata =  await db.query('SELECT * FROM site WHERE sid= $1 AND userid= $2',[id,uid], (err) => {
             if(err){res.json(err);}
         });
-        console.log(sitedata);
         if(sitedata.rowCount>0){
             res.render('user/userSiteForm',{sitedata:sitedata.rows[0],session:req.session});
         }else{
