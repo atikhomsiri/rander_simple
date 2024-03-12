@@ -1,7 +1,40 @@
 <%- include('_userheader') %>
 
 
+<% JSON.stringify(data) %>
+  
 <h1> Room </h1>
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Site Name</th>
+        <th scope="col">Room Name</th>
+        <th scope="col">Comment</th>
+        <th scope="col">  Action</th>
+        
+        <th scope="col"> <a href="/user/room/add" class="btn btn-primary">Add </a> </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(data){ for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].sitename %> </td>
+                <td> <%= data[i].roomname %> </td>
+                <td> <%= data[i].rcomment %> </td>
+                <td>  
+                  <form method="GET" action="/user/room/delete/<%= data[i].roid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+                </td>
+                <td>  
+                
+                <a href="/user/room/edit/<%= data[i].roid %>" class="btn btn-info"> Edit </a>
+                </td>
+            </tr>
+        <%  } } %>
+    </tbody>
+</table>
+
 
 
 <%- include('_userfooter') %>
