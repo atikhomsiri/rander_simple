@@ -10,88 +10,13 @@ const client = new InfluxDB({url, token})
 let org = `e266c442dcee6ac5`
 let bucket = `THESABAN`
 
-
-controller.esp01 = async (req,res) => { 
-    const { did } = req.params;
-    const { uid } = req.params;  
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
-
-        var value=null;
-        let queryClient = client.getQueryApi(org)
-        let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -1m)
-        |> filter(fn: (r) => r._measurement == "esp01")
-        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-        |> filter(fn: (r) => r["_field"] == "rssi")
-        |> last()`
-        var j=0;
-        queryClient.queryRows(fluxQuery, {   
-            next: (row, tableMeta) => {
-                const tableObject = tableMeta.toObject(row)
-                //console.log(tableObject._value);
-                value=tableObject._value;
-                j++;
-            },
-            error: (error) => {
-                console.error('\nError', error)
-            },
-            complete: () => {
-                const step = (prop) => {
-                    return new Promise(resolve => {
-                        setTimeout(() =>
-                        resolve(`done ${prop}`), 100);
-                    })
-                } 
-                res.render('iotESP01',{data:ownerdata.rows[0],valuedata:value,session:req.session});
-            } 
-        }); 
-      
-    
-
- };
-
-controller.nodemcu = async (req,res) => { 
-    const { did } = req.params;
-    const { uid } = req.params; 
-
-        const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
-        var value=null;
-        let queryClient = client.getQueryApi(org)
-        let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -1m)
-        |> filter(fn: (r) => r._measurement == "nodemcu")
-        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-        |> filter(fn: (r) => r["_field"] == "rssi")
-        |> last()`
-        var j=0;
-        queryClient.queryRows(fluxQuery, {   
-            next: (row, tableMeta) => {
-                const tableObject = tableMeta.toObject(row)
-                //console.log(tableObject._value);
-                value=tableObject._value;
-                j++;
-            },
-            error: (error) => {
-                console.error('\nError', error)
-            },
-            complete: () => {
-                const step = (prop) => {
-                    return new Promise(resolve => {
-                        setTimeout(() =>
-                        resolve(`done ${prop}`), 100);
-                    })
-                } 
-                res.render('iotNodemcu',{data:ownerdata.rows[0],valuedata:value,session:req.session});
-               
-            } 
-        });
- };
-
-
 controller.airpollution = async (req,res) => { 
     const { did } = req.params;
-    const { uid } = req.params;  
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    const uid = req.session.uid;
+
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"airpollution"]);
+    
+    if(ownerdata.rowCount>0){
         var pm25value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
@@ -119,57 +44,74 @@ controller.airpollution = async (req,res) => {
                     })
                 } 
                 
-                res.render('iotAir',{data:ownerdata.rows[0],pm25data:pm25value,session:req.session});       
+                res.render('user/useriotAir',{data:ownerdata.rows[0],pm25data:pm25value,session:req.session});       
             } 
         });
-
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
 };
 
 
 controller.sos = async (req,res) => { 
-    const { did } = req.params;
-    const { uid } = req.params;  
-
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
-    var sosvalue=null;
-    let queryClient = client.getQueryApi(org)
-    let fluxQuery = `from(bucket: "`+bucket+`")
-    |> range(start: -1m)
-    |> filter(fn: (r) => r._measurement == "sos")
-    |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-    |> filter(fn: (r) => r["_field"] == "sosvalue")
-    |> last()`
-    var j=0;
-    queryClient.queryRows(fluxQuery, {   
-        next: (row, tableMeta) => {
-            const tableObject = tableMeta.toObject(row)
-            //console.log(tableObject._value);
-            sosvalue=tableObject._value;
-            j++;
-        },
-        error: (error) => {
-            console.error('\nError', error)
-        },
-        complete: () => {
-            const step = (prop) => {
-                return new Promise(resolve => {
-                    setTimeout(() =>
-                    resolve(`done ${prop}`), 100);
-                })
+    const { did } = req.params; 
+    const uid = req.session.uid;
+    
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"sos"]);
+    if(ownerdata.rowCount>0){
+        var sosvalue=null;
+        let queryClient = client.getQueryApi(org)
+        let fluxQuery = `from(bucket: "`+bucket+`")
+        |> range(start: -1m)
+        |> filter(fn: (r) => r._measurement == "sos")
+        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+        |> filter(fn: (r) => r["_field"] == "sosvalue")
+        |> last()`
+        var j=0;
+        queryClient.queryRows(fluxQuery, {   
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row)
+                //console.log(tableObject._value);
+                sosvalue=tableObject._value;
+                j++;
+            },
+            error: (error) => {
+                console.error('\nError', error)
+            },
+            complete: () => {
+                const step = (prop) => {
+                    return new Promise(resolve => {
+                        setTimeout(() =>
+                        resolve(`done ${prop}`), 100);
+                    })
+                } 
+                
+                res.render('user/useriotSOS',{data:ownerdata.rows[0],sosdata:sosvalue,session:req.session});
+                     
             } 
-            
-            res.render('iotSOS',{data:ownerdata.rows[0],sosdata:sosvalue,session:req.session});
-                 
-        } 
-    });
+        });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
+   
 
     
 };
 
 controller.noise = async (req,res) => { 
     const { did } = req.params;
-    const { uid } = req.params;  
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    const uid = req.session.uid;
+
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"noise"]);
+    if(ownerdata.rowCount>0){
         var pm25value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
@@ -197,16 +139,24 @@ controller.noise = async (req,res) => {
                     })
                 } 
                 
-                res.render('iotNoise',{data:ownerdata.rows[0],noisedata:noisevalue,session:req.session});       
+                res.render('user/useriotNoise',{data:ownerdata.rows[0],noisedata:noisevalue,session:req.session});       
             } 
         });
-
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
 };
 
 controller.people = async (req,res) => { 
     const { did } = req.params;
-    const { uid } = req.params;  
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    const uid = req.session.uid;
+
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"people"]);
+    if(ownerdata.rowCount>0){
         var pm25value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
@@ -234,17 +184,26 @@ controller.people = async (req,res) => {
                     })
                 } 
                 
-                res.render('iotPeople',{data:ownerdata.rows[0],countdata:countvalue,session:req.session});       
+                res.render('user/useriotPeople',{data:ownerdata.rows[0],countdata:countvalue,session:req.session});       
             } 
         });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
 
 };
 
 
 controller.monitor = async (req,res) => { 
     const { did } = req.params;
-    const { uid } = req.params;  
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    const uid = req.session.uid;
+
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"monitor"]);
+    if(ownerdata.rowCount>0){
         var pm25value=null;
         let queryClient = client.getQueryApi(org)
         let fluxQuery = `from(bucket: "`+bucket+`")
@@ -272,9 +231,16 @@ controller.monitor = async (req,res) => {
                     })
                 } 
                 
-                res.render('iotMonitor',{data:ownerdata.rows[0],showdata:showvalue,session:req.session});       
+                res.render('user/useriotMonitor',{data:ownerdata.rows[0],showdata:showvalue,session:req.session});       
             } 
         });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
 
 };
 

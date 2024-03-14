@@ -1,4 +1,4 @@
-<%- include('_header') %>
+<%- include('_userheader') %>
 
 <% JSON.stringify(showdata) %>
  
@@ -9,9 +9,9 @@
     <div class="container text-left">
         <div class="row row-cols-2">
           <div class="col">Hardware Name : <%= data.hwname %></div>
-          <div class="col">Owner Name : <%= data.name %></div>
+          
           <div class="col">Mac Address : <%= data.mac %></div>
-          <div class="col">Owner Email : <%= data.email %></div>
+          
           <div class="col">Site : <%= data.sitename %></div>
           
           <div class="col">Add Date : <%= data.adddate.toLocaleDateString() %></div>
@@ -38,6 +38,6 @@
     <% } %> 
 </div>
 <BR>
-<div class="text-center"> <a href="/owner" class="btn btn-danger"> Back </a>  </div>
+<div class="text-center"> <a href="/user/owner" class="btn btn-danger"> Back </a>  </div>
         
-<%- include ('_footer') %>
+<%- include ('_userfooter') %>
