@@ -25,7 +25,8 @@ controller.login =  async (req,res) => {
         const value =  await db.query('SELECT * FROM register JOIN iotuser ON register.rid=iotuser.registerid WHERE email= $1',[username], (err) => {
             if(err){res.json(err);}
         });
-        if(value.rows[0].uid>0){
+        
+        if(value.rowCount>0){
             const match = await bcrypt.compare(password,value.rows[0].hash);   
             if(match){
                 const uid= value.rows[0].uid;
@@ -36,6 +37,8 @@ controller.login =  async (req,res) => {
             }else{
                 res.redirect('/')
             }
+        }else{
+            res.redirect('/')
         }
     }
 }

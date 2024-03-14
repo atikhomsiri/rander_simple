@@ -76,4 +76,7 @@ app.use("/user/owner",userOwnerRoute);
 const userAddRoute = require("./routes/userAddRoute");
 app.use("/user/add",userAddRoute);
 
+const useriotRoute = require("./routes/useriotRoute");
+app.use("/user/iot",useriotRoute);
+
 app.listen("3000");
