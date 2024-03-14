@@ -15,5 +15,8 @@ router.get('/people/:did',verifyToken,Controller.people);
 
 router.get('/monitor/:did',verifyToken,Controller.monitor);
 
+router.get('/airpollution/day/:did',verifyToken,Controller.dayairpollution);
+router.get('/airpollution/week/:did',verifyToken,Controller.weekairpollution);
+router.get('/airpollution/month/:did',verifyToken,Controller.monthairpollution);
 
 module.exports = router;
