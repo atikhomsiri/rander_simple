@@ -13,4 +13,8 @@ exports.roomadd = [check("siteId","Site Error!").isInt(),check("roomname","Room 
 
 exports.roomupdate = [check("siteId","Site Error!").isInt(),check("roomname","Room Name Error!").notEmpty()];
 
+exports.addroom = [check("deviceId","Device Error!").isInt(),check("siteId","Site Error!").isInt(),check("roomId","Room Error!").isInt()];
+
+exports.addsite = [check("deviceId","Device Error!").isInt(),check("siteId","Site Error!").isInt()];
+
 //exports.update = [check("email","Email Error!").isEmail(),check("name","Name Error!").notEmpty(),check("registerDate","Register Date Error!").isDate()];

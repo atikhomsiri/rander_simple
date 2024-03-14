@@ -26,7 +26,7 @@
             <td> <%= data[i].adddate.toLocaleDateString('el-GR') %> </td>   
             <td> <%= data[i].ownerComment %> </td> 
             <td> <% if(!data[i].sitename) { %> <a href="/user/owner/site/<%= data[i].deviceid %>" class="btn btn-info"> Set </a> <% }else{ %><%= data[i].sitename %> <a href="/user/owner/clearsite/<%= data[i].deviceid %>" class="btn btn-warning"> Clear </a> <% } %> </td>
-            <td> <% if(!data[i].roomname) { %> <a href="/user/owner/room/<%= data[i].deviceid %>/<%= data[i].sid %>" class="btn btn-info"> Set </a> <% }else{ %> <%= data[i].roomname %> <a href="/user/owner/clearroom/<%= data[i].deviceid %>" class="btn btn-warning"> Clear </a> <% } %>  </td>
+            <td> <% if(data[i].sitename) { %><% if(!data[i].roomname) { %> <a href="/user/owner/room/<%= data[i].deviceid %>/<%= data[i].sid %>" class="btn btn-info"> Set </a> <% }else{ %> <%= data[i].roomname %> <a href="/user/owner/clearroom/<%= data[i].deviceid %>" class="btn btn-warning"> Clear </a> <% } } %>  </td>
             
             <td>  
               <form method="GET" action="/user/owner/delete/<%= data[i].deviceid %>"  onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>

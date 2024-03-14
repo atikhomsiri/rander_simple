@@ -1,0 +1,38 @@
+<%- include('_userheader') %>
+
+<% JSON.stringify(sdata) %>
+
+<h1> Device Site Assignment</h1>
+
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+    <H3> > Device > Site </H3>
+    <form  action="/user/owner/site/" method="post">
+        
+
+        <div class="mb-3">
+            <label  class="form-label">Mac Address </label>
+            <input type="text" class="form-control" value="<%= data.mac %> " readonly>
+            <input type="hidden" name="deviceId" value="<%= data.deviceid %>">
+        </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Hardware</label>
+            <input type="text" class="form-control" value="<%= data.hwname %>" readonly>
+          </div>
+          
+          
+          <div class="mb-3">
+            <label  class="form-label">Site *</label>
+            <select class="form-control" name="siteId">
+                <option>Please select</option>
+                <% if(sdata){ for(var i=0;i<sdata.length;i++){ %>
+                        <option value="<%= sdata[i].sid %>"> <%= sdata[i].sitename %> </option>
+                <% } } %>
+            </select>
+        </div>
+
+        <div class="text-center"> <a href="/user/owner" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+
+      <%- include ('_userfooter') %>
