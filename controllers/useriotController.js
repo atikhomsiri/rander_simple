@@ -56,156 +56,6 @@ controller.airpollution = async (req,res) => {
     }
 };
 
-
-controller.dayairpollution = async (req,res) => { 
-    const { did } = req.params;
-    const uid = req.session.uid;
-
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"airpollution"]);
-    //console.log(ownerdata);
-    if(ownerdata.rowCount>0){
-        var pm25value=[];
-        var pm25time=[];
-        let queryClient = client.getQueryApi(org)
-        let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -24h)
-        |> filter(fn: (r) => r["_measurement"] == "airpollution")
-        |> filter(fn: (r) => r["_field"] == "pm2_5")
-        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-        |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
-        |> yield(name: "mean")`
-        var i=0;
-        queryClient.queryRows(fluxQuery, {   
-            next: (row, tableMeta) => {
-                const tableObject = tableMeta.toObject(row)
-                //console.log(tableObject._value);
-                pm25value[i]=tableObject._value;
-                pm25time[i]=tableObject._time;
-                i++
-            },
-            error: (error) => {
-                console.error('\nError', error)
-            },
-            complete: () => {
-                const step = (prop) => {
-                    return new Promise(resolve => {
-                        setTimeout(() =>
-                        resolve(`done ${prop}`), 100);
-                    })
-                } 
-                
-                res.render('user/useriotAirDay',{data:ownerdata.rows[0],pm25data:pm25value,pm25time:pm25time,session:req.session});       
-            } 
-        });
-    }else{
-        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
-        req.session.error = {"errors":[error]};
-        req.session.topic=null;
-        req.session.success=false;
-        res.redirect('/user/owner/');
-    }
-};
-
-
-controller.weekairpollution = async (req,res) => { 
-    const { did } = req.params;
-    const uid = req.session.uid;
-
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"airpollution"]);
-   
-    if(ownerdata.rowCount>0){
-        var pm25value=[];
-        var pm25time=[];
-        let queryClient = client.getQueryApi(org)
-        let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -7d)
-        |> filter(fn: (r) => r["_measurement"] == "airpollution")
-        |> filter(fn: (r) => r["_field"] == "pm2_5")
-        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-        |> aggregateWindow(every: 6h, fn: mean, createEmpty: false)
-        |> yield(name: "mean")`
-        var i=0;
-        queryClient.queryRows(fluxQuery, {   
-            next: (row, tableMeta) => {
-                const tableObject = tableMeta.toObject(row)
-                //console.log(tableObject._value);
-                pm25value[i]=tableObject._value;
-                pm25time[i]=tableObject._time;
-                i++
-            },
-            error: (error) => {
-                console.error('\nError', error)
-            },
-            complete: () => {
-                const step = (prop) => {
-                    return new Promise(resolve => {
-                        setTimeout(() =>
-                        resolve(`done ${prop}`), 100);
-                    })
-                } 
-                
-                res.render('user/useriotAirWeek',{data:ownerdata.rows[0],pm25data:pm25value,pm25time:pm25time,session:req.session});       
-            } 
-        });
-    }else{
-        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
-        req.session.error = {"errors":[error]};
-        req.session.topic=null;
-        req.session.success=false;
-        res.redirect('/user/owner/');
-    }
-};
-
-
-controller.monthairpollution = async (req,res) => { 
-    const { did } = req.params;
-    const uid = req.session.uid;
-
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"airpollution"]);
-   
-    if(ownerdata.rowCount>0){
-        var pm25value=[];
-        var pm25time=[];
-        let queryClient = client.getQueryApi(org)
-        let fluxQuery = `from(bucket: "`+bucket+`")
-        |> range(start: -30d)
-        |> filter(fn: (r) => r["_measurement"] == "airpollution")
-        |> filter(fn: (r) => r["_field"] == "pm2_5")
-        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
-        |> aggregateWindow(every: 24h, fn: mean, createEmpty: false)
-        |> yield(name: "mean")`
-        var i=0;
-        queryClient.queryRows(fluxQuery, {   
-            next: (row, tableMeta) => {
-                const tableObject = tableMeta.toObject(row)
-                //console.log(tableObject._value);
-                pm25value[i]=tableObject._value;
-                pm25time[i]=tableObject._time;
-                i++
-            },
-            error: (error) => {
-                console.error('\nError', error)
-            },
-            complete: () => {
-                const step = (prop) => {
-                    return new Promise(resolve => {
-                        setTimeout(() =>
-                        resolve(`done ${prop}`), 100);
-                    })
-                } 
-                
-                res.render('user/useriotAirMonth',{data:ownerdata.rows[0],pm25data:pm25value,pm25time:pm25time,session:req.session});       
-            } 
-        });
-    }else{
-        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
-        req.session.error = {"errors":[error]};
-        req.session.topic=null;
-        req.session.success=false;
-        res.redirect('/user/owner/');
-    }
-};
-
 controller.sos = async (req,res) => { 
     const { did } = req.params; 
     const uid = req.session.uid;
@@ -588,7 +438,7 @@ controller.maxdayiot = async (req,res) => {
                     })
                 } 
                 
-                res.render('user/useriotDay',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+                res.render('user/useriotDayMax',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
             } 
         });
     }else{
@@ -640,7 +490,7 @@ controller.maxweekiot = async (req,res) => {
                     })
                 } 
                 
-                res.render('user/useriotWeek',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+                res.render('user/useriotWeekMax',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
             } 
         });
     }else{
@@ -691,7 +541,7 @@ controller.maxmonthiot = async (req,res) => {
                     })
                 } 
                 
-                res.render('user/useriotMonth',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+                res.render('user/useriotMonthMax',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
             } 
         });
     }else{
@@ -703,5 +553,152 @@ controller.maxmonthiot = async (req,res) => {
     }
 };
 
+
+controller.summonthiot = async (req,res) => { 
+    const { did } = req.params;
+    const uid = req.session.uid;
+    let fieldname= null;
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+     if(ownerdata.rows[0].datapoint=="people"){fieldname="count";}
+    
+    if(ownerdata.rowCount>0){
+        var valuedata=[];
+        var timedata=[];
+        let queryClient = client.getQueryApi(org)
+        let fluxQuery = `from(bucket: "`+bucket+`")
+        |> range(start: -30d)
+        |> filter(fn: (r) => r["_measurement"] == "`+ownerdata.rows[0].datapoint+`")
+        |> filter(fn: (r) => r["_field"] == "`+fieldname+`")
+        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+        |> aggregateWindow(every: 24h, fn: sum, createEmpty: false)
+        |> yield(name: "sum")`
+        var i=0;
+        queryClient.queryRows(fluxQuery, {   
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row)
+                valuedata[i]=tableObject._value;
+                timedata[i]=tableObject._time;
+                i++
+            },
+            error: (error) => {
+                console.error('\nError', error)
+            },
+            complete: () => {
+                const step = (prop) => {
+                    return new Promise(resolve => {
+                        setTimeout(() =>
+                        resolve(`done ${prop}`), 100);
+                    })
+                } 
+                
+                res.render('user/useriotMonthSum',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+            } 
+        });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
+};
+
+controller.sumweekiot = async (req,res) => { 
+    const { did } = req.params;
+    const uid = req.session.uid;
+    let fieldname= null;
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    if(ownerdata.rows[0].datapoint=="people"){fieldname="count";}
+    
+    if(ownerdata.rowCount>0){
+        var valuedata=[];
+        var timedata=[];
+        let queryClient = client.getQueryApi(org)
+        let fluxQuery = `from(bucket: "`+bucket+`")
+        |> range(start: -7d)
+        |> filter(fn: (r) => r["_measurement"] == "`+ownerdata.rows[0].datapoint+`")
+        |> filter(fn: (r) => r["_field"] == "`+fieldname+`")
+        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+        |> aggregateWindow(every: 6h, fn: sum, createEmpty: false)
+        |> yield(name: "sum")`
+        var i=0;
+        queryClient.queryRows(fluxQuery, {   
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row)
+                valuedata[i]=tableObject._value;
+                timedata[i]=tableObject._time;
+                i++
+            },
+            error: (error) => {
+                console.error('\nError', error)
+            },
+            complete: () => {
+                const step = (prop) => {
+                    return new Promise(resolve => {
+                        setTimeout(() =>
+                        resolve(`done ${prop}`), 100);
+                    })
+                } 
+                
+                res.render('user/useriotWeekSum',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+            } 
+        });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
+};
+
+controller.sumdayiot = async (req,res) => { 
+    const { did } = req.params;
+    const uid = req.session.uid;
+    let fieldname= null;
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    if(ownerdata.rows[0].datapoint=="people"){fieldname="count";}
+    
+    if(ownerdata.rowCount>0){
+        var valuedata=[];
+        var timedata=[];
+        let queryClient = client.getQueryApi(org)
+        let fluxQuery = `from(bucket: "`+bucket+`")
+        |> range(start: -24h)
+        |> filter(fn: (r) => r["_measurement"] == "`+ownerdata.rows[0].datapoint+`")
+        |> filter(fn: (r) => r["_field"] == "`+fieldname+`")
+        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+        |> aggregateWindow(every: 1h, fn: sum, createEmpty: false)
+        |> yield(name: "sum")`
+        var i=0;
+        queryClient.queryRows(fluxQuery, {   
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row)
+                valuedata[i]=tableObject._value;
+                timedata[i]=tableObject._time;
+                i++
+            },
+            error: (error) => {
+                console.error('\nError', error)
+            },
+            complete: () => {
+                const step = (prop) => {
+                    return new Promise(resolve => {
+                        setTimeout(() =>
+                        resolve(`done ${prop}`), 100);
+                    })
+                } 
+                
+                res.render('user/useriotDaySum',{data:ownerdata.rows[0],valuedata:valuedata,timedata:timedata,session:req.session});       
+            } 
+        });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }
+};
 
 module.exports = controller;

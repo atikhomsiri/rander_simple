@@ -15,11 +15,6 @@ router.get('/people/:did',verifyToken,Controller.people);
 
 router.get('/monitor/:did',verifyToken,Controller.monitor);
 
-router.get('/airpollution/day/:did',verifyToken,Controller.dayairpollution);
-router.get('/airpollution/week/:did',verifyToken,Controller.weekairpollution);
-router.get('/airpollution/month/:did',verifyToken,Controller.monthairpollution);
-
-
 router.get('/day/:did',verifyToken,Controller.dayiot);
 router.get('/week/:did',verifyToken,Controller.weekiot);
 router.get('/month/:did',verifyToken,Controller.monthiot);
@@ -27,5 +22,10 @@ router.get('/month/:did',verifyToken,Controller.monthiot);
 router.get('/max/day/:did',verifyToken,Controller.maxdayiot);
 router.get('/max/week/:did',verifyToken,Controller.maxweekiot);
 router.get('/max/month/:did',verifyToken,Controller.maxmonthiot);
+
+router.get('/sum/day/:did',verifyToken,Controller.sumdayiot);
+router.get('/sum/week/:did',verifyToken,Controller.sumweekiot);
+router.get('/sum/month/:did',verifyToken,Controller.summonthiot);
+
 
 module.exports = router;
