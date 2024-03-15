@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.set("trust proxy", false);
+
 app.set("view engine","ejs");
 
 const session = require("express-session");
