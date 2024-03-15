@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-app.set("trust proxy", false);
+app.set('trust proxy', 1);
 
 app.set("view engine","ejs");
 
