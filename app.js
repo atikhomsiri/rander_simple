@@ -21,6 +21,8 @@ const body = require("body-parser");
 app.use(express.json()) //For JSON requests
 app.use(express.urlencoded({extended: true}));
 
+process.env.TZ = "Asia/Bangkok";
+
 const UserData=[ {
   username: "admin",
   password: "Passw0rd!"
