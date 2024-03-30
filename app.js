@@ -81,6 +81,41 @@ const userAddRoute = require("./routes/userAddRoute");
 app.use("/user/add",userAddRoute);
 
 const useriotRoute = require("./routes/useriotRoute");
+const { publicEncrypt } = require("crypto");
 app.use("/user/iot",useriotRoute);
+
+let downloadCounter = 1;
+const LAST_VERSION = 0.2;
+app.get('/iot/update', (request, response) => {
+    const version = (request.header("x-esp8266-version"))?parseFloat(request.header("x-esp8266-version")):0;
+     console.log(version);
+    if (version>0 && !(version==LAST_VERSION)){
+        // If you need an update go here
+        if(version==0.3){
+          console.log("GO3");
+        response.status(200).download(path.join(__dirname,'public/iot/OTI4.bin'), 'OTI.bin', (err)=>{
+            if (err) {
+                console.error("Problem on download firmware: ", err)
+            }else{
+                downloadCounter++;
+            }
+        });
+      }
+        if(version==0.4){
+          console.log("GO4");
+        response.status(200).download(path.join(__dirname,'public/iot/OTI3.bin'), 'OTI.bin', (err)=>{
+          if (err) {
+              console.error("Problem on download firmware: ", err)
+          }else{
+              downloadCounter++;
+          }
+        });
+      }
+
+        console.log('Your file has been downloaded '+downloadCounter+' times!')
+    }else{
+        response.status(304).send('No update needed!')
+    }
+});
 
 app.listen("3000");
