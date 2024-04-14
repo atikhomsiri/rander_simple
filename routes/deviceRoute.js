@@ -10,5 +10,7 @@ router.post('/new',verifyToken,validator.add,deviceController.new);
 router.get('/delete/:id',verifyToken,deviceController.delete);
 router.get('/edit/:id',verifyToken,deviceController.edit);
 router.post('/update/:id',verifyToken,validator.update,deviceController.update);
+router.get('/software/:id',verifyToken,deviceController.software);
+router.post('/version/:id',verifyToken,validator.version,deviceController.version);
 
 module.exports = router;

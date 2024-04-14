@@ -1,0 +1,43 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+<h1 > Software </h1>
+
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Hardware</th>
+        <th scope="col">Version</th>
+        <th scope="col">Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col"> Action</th>
+        <th scope="col">   <a href="/software/add" class="btn btn-primary" > Add </a>  </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(data){ for(var i=0;i<data.length;i++){ %>
+        <tr>
+            <td> <%= (i+1) %> </td>
+            <td> <%= data[i].hwname %> </td>
+            <td> <%= data[i].version %> </td>
+            <td> <% if(data[i].versiondate){%> <%= data[i].versiondate.toLocaleDateString('el-GR') %> <% } %></td>
+            <td> <%= data[i].comment %> </td>
+            <td>  
+<form method="GET" action="/software/delete/<%= data[i].swid %>" onsubmit="return submitForm(this);">  <input class="btn btn-danger" type="submit" value="Del"/> </form>
+          </td>
+          <td>
+            <a href="/software/edit/<%= data[i].swid %>" class="btn btn-info"  > Edit </a>
+            
+            </td>
+        </tr>
+    <%  } } %>
+      </thead>
+    </tbody>
+  </table>
+
+
+     
+
+<%- include ('_footer') %>

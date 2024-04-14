@@ -1,0 +1,47 @@
+<%- include('_header') %>
+
+<% JSON.stringify(devicedata) %>
+
+<% JSON.stringify(softwaredata) %>
+
+<h1> Device Software </h1>
+
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+    <H3> > Device  > Set Software  </H3>
+    <form  action="/device/version/<%= devicedata.did %>" method="post">
+        <div class="mb-3">
+          <label  class="form-label">Mac Address</label>
+          <input type="text" class="form-control"  value="<%= devicedata.mac %>" readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Hardware</label>
+            <input type="text" class="form-control" value="<%= devicedata.hwname %>" readonly>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Build Date</label>
+            <input type="date" value="<%= devicedata.builddate.toISOString().substr(0,10) %>" class="form-control" readonly>
+        </div>
+        
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" value="<%= devicedata.comment %>" readonly>
+        </div> 
+
+        <div class="mb-3">
+            <label  class="form-label">Software Version</label>
+            <select class="form-control" name="softwareid">
+                <option>Please select</option>
+                <% if(softwaredata){ for(var i=0;i<softwaredata.length;i++){ %>
+                        <option value="<%= softwaredata[i].swid %>"> <%= softwaredata[i].version %> </option>
+                <% } } %>
+            </select>
+        </div>
+
+
+        <div class="text-center"> <a href="/device" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>   
+      </form>
+
+
+</div></div></div>
+
+<%- include ('_footer') %>

@@ -1,0 +1,76 @@
+<%- include('_header') %>
+
+<% JSON.stringify(session) %>
+
+
+<h1> Software </h1>
+
+<div class="container"> <div class="row justify-content-center"> <div class="col-6">
+
+<% if(data) { %>
+    <% JSON.stringify(data) %>
+    <H3> > Software > Edit </H3>
+    <form  action="/software/update/<%= data.swid %>" method="post">
+        
+        <div class="mb-3">
+            <label  class="form-label">Hardware</label>
+            <select class="form-control" name="hardwareId">
+                <option>Please select</option>
+                <% if(hwdata){ for(var i=0;i<hwdata.length;i++){ %>
+                        <option value="<%= hwdata[i].hwid %>" 
+                            <% if(hwdata[i].hwid==data.hardwareid){ %> 
+                                selected
+                            <% } %> > <%= hwdata[i].hwname %></option>
+                <% } } %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Version</label>
+            <input type="text" class="form-control" name="version" value="<%= data.version %>">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Version Date</label>
+            <input type="date"  class="form-control" name="versiondate" value=<% if(data.versiondate){%>"<%= data.versiondate.toISOString().substr(0,10) %>"<% } %>>
+        </div>
+        
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" value="<%= data.comment %>">
+        </div> 
+        <div class="text-center"> <a href="/software" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+    
+<% } else { %>
+    <H3> > Software > Add </H3>
+    <form  action="/software/new" method="post">
+        
+        <div class="mb-3">
+            <label  class="form-label">Hardware</label>
+            <select class="form-control" name="hardwareId">
+                <option>Please select</option>
+                <% if(hwdata){ for(var i=0;i<hwdata.length;i++){ %>
+                        <option value="<%= hwdata[i].hwid %>"><%= hwdata[i].hwname %></option>
+                <% } } %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Version</label>
+            <input type="text" class="form-control" name="version" >
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Version Date</label>
+            <input type="date" value="<%=new Date().toISOString().split('T')[0] %>" class="form-control" name="versiondate" >
+        </div>
+        
+        <div class="mb-3">
+            <label  class="form-label">Comment</label>
+            <input type="text" class="form-control" name="comment" >
+        </div> 
+        <div class="text-center"> <a href="/software" class="btn btn-danger"> Back </a>   <button type="submit" class="btn btn-primary center">Submit</button> </div>
+        
+      </form>
+<% } %>
+</div></div></div>
+
+<%- include ('_footer') %>

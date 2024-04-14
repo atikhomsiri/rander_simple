@@ -10,6 +10,8 @@
         <th scope="col">No</th>
         <th scope="col">Mac Address</th>
         <th scope="col">Hardware</th>
+        <th scope="col">Software</th>
+        <th scope="col">Version</th>
         <th scope="col">Build Date</th>
         <th scope="col">Comment</th>
         <th scope="col">Action </th>
@@ -22,6 +24,8 @@
                 <td> <%= (i+1) %> </td>
                 <td> <%= data[i].mac %> </td>
                 <td> <%= data[i].hwname %> </td>
+                <td> <%= data[i].version %>  </td>
+                <td> <a href="/device/software/<%= data[i].did %>" class="btn btn-warning"> Set </a> </td>
                 <td> <%= data[i].builddate.toLocaleDateString('el-GR') %> </td>
                 <td> <%= data[i].comment %> </td>
                 <td>  
