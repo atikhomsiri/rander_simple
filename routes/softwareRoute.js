@@ -10,5 +10,6 @@ router.get('/edit/:id',verifyToken,softwareController.edit);
 router.post('/update/:id',verifyToken,validator.update,softwareController.update);
 router.get('/add',verifyToken,softwareController.add);
 router.post('/new',verifyToken,validator.add,softwareController.new);
+router.get('/history',verifyToken,softwareController.history);
 
 module.exports = router;

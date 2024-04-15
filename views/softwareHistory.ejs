@@ -1,0 +1,36 @@
+<%- include('_header') %>
+
+<% JSON.stringify(data) %>
+<h1 > Software History </h1>
+
+
+<table class="table table-responsive mx-auto" >
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Mac</th>
+        <th scope="col">Hardware</th>
+        <th scope="col">Version</th>
+        <th scope="col">Install Date</th>
+     </tr>
+    </thead>
+    <tbody>
+      <% if(data){ for(var i=0;i<data.length;i++){ %>
+        <tr>
+            <td> <%= (i+1) %> </td>
+            <td> <%= data[i].mac %> </td>
+            <td> <%= data[i].hwname %> </td>
+            <td> <%= data[i].version %> </td>
+            <td> <% if(data[i].installdate){%> <%= data[i].installdate %> <% } %></td>
+            
+            
+        </tr>
+    <%  } } %>
+      </thead>
+    </tbody>
+  </table>
+
+
+     
+
+<%- include ('_footer') %>

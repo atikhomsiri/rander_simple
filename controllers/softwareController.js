@@ -87,4 +87,12 @@ controller.update = async (req,res) => {
     
 };
 
+controller.history = (req,res) => { 
+    db.query('SELECT * FROM softwarehistory JOIN software ON softwarehistory.softwareid=software.swid JOIN device ON softwarehistory.deviceid=device.did JOIN hardware ON softwarehistory.hardwareid=hardware.hwid ORDER BY softwarehistory.installdate DESC',function(err,result){
+        if (err) {console.error(err);return;}
+        
+        res.render('softwareHistory',{data:result.rows,session:req.session});
+    });
+};
+
 module.exports = controller;
