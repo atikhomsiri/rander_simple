@@ -60,7 +60,7 @@ controller.sos = async (req,res) => {
     const { did } = req.params; 
     const uid = req.session.uid;
     
-    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"sos"]);
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid JOIN software ON device.softwareid=software.swid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"sos"]);
     if(ownerdata.rowCount>0){
         var sosvalue=null;
         let queryClient = client.getQueryApi(org)
@@ -104,6 +104,54 @@ controller.sos = async (req,res) => {
 
     
 };
+
+controller.esp01 = async (req,res) => { 
+    const { did } = req.params; 
+    const uid = req.session.uid;
+    
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN software ON device.softwareid=software.swid LEFT JOIN (SELECT hardwareid,max(version) FROM software GROUP BY hardwareid) as b ON device.hardwareid=b.hardwareid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3',[did,uid,"esp01"]);
+    if(ownerdata.rowCount>0){
+        
+        var iotvalue=null;
+        let queryClient = client.getQueryApi(org)
+        let fluxQuery = `from(bucket: "`+bucket+`")
+        |> range(start: -1m)
+        |> filter(fn: (r) => r._measurement == "esp01")
+        |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+        |> filter(fn: (r) => r["_field"] == "rssi")
+        |> last()`
+        var j=0;
+        queryClient.queryRows(fluxQuery, {   
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row)
+        //console.log(tableObject._value);
+                iotvalue=tableObject._value;
+                j++;
+            },
+            error: (error) => {
+                console.error('\nError', error)
+            },
+            complete: () => {
+                const step = (prop) => {
+                    return new Promise(resolve => {
+                        setTimeout(() =>
+                        resolve(`done ${prop}`), 100);
+                    })
+                } 
+
+                res.render('user/useriotESP01',{data:ownerdata.rows[0],iotdata:iotvalue,session:req.session});
+                     
+            } 
+        });
+    }else{
+        let error = {msg:"Error Cannot Show IOT Device!", type:'show',location: 'body',  value:'errors'};
+        req.session.error = {"errors":[error]};
+        req.session.topic=null;
+        req.session.success=false;
+        res.redirect('/user/owner/');
+    }    
+};
+
 
 controller.noise = async (req,res) => { 
     const { did } = req.params;
@@ -243,6 +291,29 @@ controller.monitor = async (req,res) => {
 
 };
 
+controller.deviceupdate = async (req,res) => { 
+    const { did } = req.params; 
+    const uid = req.session.uid;
+    
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN software ON device.softwareid=software.swid LEFT JOIN (SELECT hardwareid,swid as maxid,version as max FROM software ORDER BY version DESC) as b ON device.hardwareid=b.hardwareid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 AND datapoint=$3 ORDER BY MAX DESC LIMIT 1',[did,uid,"esp01"]);
+   //console.log(ownerdata.rowCount);
+    if(ownerdata.rowCount>0){
+        if(ownerdata.rows[0].max>ownerdata.rows[0].version){
+     
+            //res.json(ownerdata.rows[0]);
+            req.session.topic="Set update device software success";
+            req.session.success=true;
+            const value =  await db.query('UPDATE device SET softwareid=$1 WHERE did= $2',[ownerdata.rows[0].maxid,did], (err) => {
+                if(err){res.json(err);}
+              });
+            res.redirect('/user/owner/');
+
+        }else{
+            res.send("NOT UPDATE");
+        }
+        
+    }
+}
 
 controller.dayiot = async (req,res) => { 
     const { did } = req.params;

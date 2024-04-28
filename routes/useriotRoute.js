@@ -15,6 +15,10 @@ router.get('/people/:did',verifyToken,Controller.people);
 
 router.get('/monitor/:did',verifyToken,Controller.monitor);
 
+router.get('/esp01/:did',verifyToken,Controller.esp01);
+
+router.get('/deviceupdate/:did',verifyToken,Controller.deviceupdate);
+
 router.get('/day/:did',verifyToken,Controller.dayiot);
 router.get('/week/:did',verifyToken,Controller.weekiot);
 router.get('/month/:did',verifyToken,Controller.monthiot);
