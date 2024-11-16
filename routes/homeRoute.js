@@ -17,6 +17,8 @@ router.get('/logout',homeController.logout);
 
 router.get('/',homeController.index);
 
+router.get('/signup',homeController.signup);
+
 router.post('/',limiter,homeController.login);
 
 module.exports = router;

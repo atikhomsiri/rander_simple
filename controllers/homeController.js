@@ -7,6 +7,10 @@ controller.index =  (req,res) => {
     res.render('index');
 }
 
+controller.signup =  (req,res) => { 
+    res.render('signup');
+}
+
 controller.logout =  (req,res) => { 
     req.session.token = null;
     res.redirect('/');
