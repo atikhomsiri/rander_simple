@@ -65,7 +65,7 @@ controller.new = async (req,res) => {
             //console.log(hashvalue);
            const value =  await db.query('INSERT INTO iotuser (registerid,hash,commitdate) VALUES ($1,$2,DATE(NOW()))',[id,hashvalue]);
            
-           let sendmail = "atk.siri@gmail.com";
+           let sendmail = data.email;
            let sendpass = data.password1;
            let mailOptions = {
              from: 'admin@thesaban.org',                // sender
