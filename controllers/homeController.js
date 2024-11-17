@@ -11,9 +11,18 @@ controller.signup =  (req,res) => {
     res.render('signup');
 }
 
-controller.register = async (req,res) => { 
+controller.register = (req,res) => { 
+
         const data = req.body;        
-        const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
+
+        res.send("NAME : "+data.name+" EMAIL :  "+data.email+" PHONE : "+data.phone)
+       /* db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone],function(err,result){
+            if (err) {console.error(err);return;}
+            res.send("Register OK");
+        });
+        */
+
+        //const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
         res.redirect('/');
 };
 
