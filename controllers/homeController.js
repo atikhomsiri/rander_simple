@@ -11,6 +11,15 @@ controller.signup =  (req,res) => {
     res.render('signup');
 }
 
+controller.register = async (req,res) => { 
+
+        const data = req.body;       
+        res.send(data);   
+//        const value =  await db.query('INSERT INTO register(name,email,phone,registerdate,comment) VALUES ($1,$2,$3,$4,$5)',[data.name,data.email,data.phone,data.registerDate,data.comment]);
+//        res.redirect('/register/');
+};
+
+
 controller.logout =  (req,res) => { 
     req.session.token = null;
     res.redirect('/');
