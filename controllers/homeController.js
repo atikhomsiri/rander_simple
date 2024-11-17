@@ -17,7 +17,7 @@ controller.register = (req,res) => {
         let dd = new Date().toLocaleDateString('en-GB');
         res.send(dd);
         // res.send("NAME : "+data.name+" EMAIL :  "+data.email+" PHONE : "+data.phone);
-       db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,)',[data.name,data.email,data.phone],function(err,result){
+       db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,$4)',[data.name,data.email,data.phone,dd],function(err,result){
             if (err) {res.send(err);console.error(err);return;}
             res.send("Register OK");
         });
