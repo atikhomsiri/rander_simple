@@ -12,11 +12,10 @@ controller.signup =  (req,res) => {
 }
 
 controller.register = async (req,res) => { 
-
         const data = req.body;       
         res.send(data);   
-//        const value =  await db.query('INSERT INTO register(name,email,phone,registerdate,comment) VALUES ($1,$2,$3,$4,$5)',[data.name,data.email,data.phone,data.registerDate,data.comment]);
-//        res.redirect('/register/');
+        const value =  await db.query('INSERT INTO register(name,email,phone,registerdate,comment) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
+        res.redirect('/');
 };
 
 
