@@ -71,8 +71,8 @@ controller.new = async (req,res) => {
             subject: 'THESABAN.ORG REGISTER',              // Mail subject
             html: '<h1>Your Password : '+data.password1+'</h1> <h2> <a href="https://www.thesaban.org"> IOT @ THESABAN.ORG </a> </h2>'   // HTML body
           };
-          res.send(mailOptions);
-        // transporter.sendMail(mailOptions, function (err, info) {if(err) console.log(err) });
+          //res.send(mailOptions);
+        transporter.sendMail(mailOptions, function (err, info) {if(err) console.log(err) });
            
            res.redirect('/user/');
         }else{
