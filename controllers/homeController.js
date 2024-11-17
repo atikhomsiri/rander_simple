@@ -12,8 +12,7 @@ controller.signup =  (req,res) => {
 }
 
 controller.register = async (req,res) => { 
-        const data = req.body;       
-        res.send(data);   
+        const data = req.body;        
         const value =  await db.query('INSERT INTO register(name,email,phone,registerdate,comment) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
         res.redirect('/');
 };
