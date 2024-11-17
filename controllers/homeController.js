@@ -15,13 +15,14 @@ controller.register = async (req,res) => {
 
         const data = req.body;        
         let dd = new Date().toLocaleDateString('en-US');
-
+        
         const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,$4)',[data.name,data.email,data.phone,dd], (err) => {
             if(err){res.json(err);}
           });
         res.redirect('/');  
     
-        
+        //const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
+       // res.redirect('/');
 };
 
 
