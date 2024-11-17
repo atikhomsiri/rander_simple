@@ -19,7 +19,7 @@ router.get('/',homeController.index);
 
 router.get('/signup',homeController.signup);
 
-router.post('/',homeController.register);
+router.post('/register',homeController.register);
 
 router.post('/',limiter,homeController.login);
 
