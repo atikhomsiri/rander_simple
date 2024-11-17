@@ -65,15 +65,16 @@ controller.new = async (req,res) => {
             //console.log(hashvalue);
            const value =  await db.query('INSERT INTO iotuser (registerid,hash,commitdate) VALUES ($1,$2,DATE(NOW()))',[id,hashvalue]);
            
+           let sendmail = "atk.siri@gmail.com";
+           let sendpass = data.password1;
            let mailOptions = {
-            from: 'admin@thesaban.org',                // sender
-            to: data.email,                // list of receivers
-            subject: 'THESABAN.ORG REGISTER',              // Mail subject
-            html: '<h1>Your Password : '+data.password1+'</h1> <h2> <a href="https://www.thesaban.org"> IOT @ THESABAN.ORG </a> </h2>'   // HTML body
-          };
-          //res.send(mailOptions);
-        transporter.sendMail(mailOptions, function (err, info) {if(err) console.log(err) });
-           
+             from: 'admin@thesaban.org',                // sender
+             to: sendmail,                // list of receivers
+             subject: 'THESABAN.ORG REGISTER',              // Mail subject
+             html: '<h1>Your Password :'+sendpass+' </h1> <h2> <a href="https://www.thesaban.org"> IOT @ THESABAN.ORG </a> </h2>'   // HTML body
+           };
+         
+         transporter.sendMail(mailOptions, function (err, info) {if(err) console.log(err) });          
            res.redirect('/user/');
         }else{
             let error = {msg:"Error Password not Matches!", type:'Add',location: 'body',  value:'errors'};
