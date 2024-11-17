@@ -11,19 +11,17 @@ controller.signup =  (req,res) => {
     res.render('signup');
 }
 
-controller.register = (req,res) => { 
+controller.register = async (req,res) => { 
 
         const data = req.body;        
         let dd = new Date().toLocaleDateString('en-US');
-       //res.send(dd);
-        // res.send("NAME : "+data.name+" EMAIL :  "+data.email+" PHONE : "+data.phone);
-       db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,$4)',[data.name,data.email,data.phone,dd],function(err,result){
-            if (err) {res.send(err);console.error(err);return;}
-            res.send("Register OK");
-        });
+
+        const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,$4)',[data.name,data.email,data.phone,dd], (err) => {
+            if(err){res.json(err);}
+          });
+        res.redirect('/');  
     
-        //const value =  await db.query('INSERT INTO register(name,email,phone,registerdate) VALUES ($1,$2,$3,GETDATE())',[data.name,data.email,data.phone]);
-       // res.redirect('/');
+        
 };
 
 
