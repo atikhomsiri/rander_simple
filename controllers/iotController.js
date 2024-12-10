@@ -50,6 +50,7 @@ controller.esp01 = async (req,res) => {
 
  };
 
+ 
 controller.nodemcu = async (req,res) => { 
     const { did } = req.params;
     const { uid } = req.params; 
