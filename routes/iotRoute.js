@@ -6,6 +6,8 @@ const verifyToken =require('../controllers/jwt');
 
 router.get('/sos/:did/:uid',verifyToken,Controller.sos);
 
+router.get('/soscenter/:did/:uid',verifyToken,Controller.soscenter);
+
 router.get('/airpollution/:did/:uid',verifyToken,Controller.airpollution);
 
 router.get('/noise/:did/:uid',verifyToken,Controller.noise);

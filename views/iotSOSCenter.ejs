@@ -1,0 +1,55 @@
+<%- include('_header') %>
+
+<% JSON.stringify(sosdata) %>
+ 
+
+<h1> SOS Center Device </h1>
+
+
+    <div class="container text-left">
+        <div class="row row-cols-2">
+          <div class="col">Hardware Name : <%= data.hwname %></div>
+          <div class="col">Owner Name : <%= data.name %></div>
+          <div class="col">Mac Address : <%= data.mac %></div>
+          <div class="col">Owner Email : <%= data.email %></div>
+          <div class="col">Site : <%= data.sitename %></div>
+          
+          <div class="col">Add Date : <%= data.adddate.toLocaleDateString() %></div>
+          <div class="col">Room : <%= data.roomname %></div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+  
+<% if(sosdata!=null){ %>
+          
+    <% if(sosdata==1){%> 
+    
+        <div class="card bg-success text-white mx-auto" style="width: 16rem;"><div class="card-body"> 
+            SOS Node <p> <h3> Status : ONLINE  (rssi:<%= valuedata  %>)</h3>
+            </p> </div></div> <br>
+        </div>
+
+        
+    <% }%> 
+    <% if(sosdata==0){%> 
+    
+        <div class="card bg-warning text-white mx-auto" style="width: 16rem;"><div class="card-body"> 
+            SOS Center <p> <h3> Status : SOS Alarm!</h3>
+            </p> </div></div> <br>
+        </div>
+
+    <% }%> 
+
+<% }else{ %> 
+    <div class="card bg-secondary text-white mx-auto" style="width: 16rem;"><div class="card-body"> 
+        SOS Center <p> <h3> Status : OFFLINE 
+    </h2></p> </div></div> <br>
+</div>
+    
+<% } %> 
+</div>
+<BR>
+<div class="text-center"> <a href="/owner" class="btn btn-danger"> Back </a>  </div>
+        
+<%- include ('_footer') %>

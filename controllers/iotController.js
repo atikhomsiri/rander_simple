@@ -166,6 +166,46 @@ controller.sos = async (req,res) => {
     
 };
 
+controller.soscenter = async (req,res) => { 
+    const { did } = req.params;
+    const { uid } = req.params;  
+
+    const ownerdata =  await db.query('SELECT * FROM deviceowner JOIN iotuser ON deviceowner.userid=iotuser.uid JOIN register ON iotuser.registerid=register.rid JOIN device ON deviceowner.deviceid=device.did JOIN hardware ON device.hardwareid=hardware.hwid LEFT JOIN site ON deviceowner.siteid=site.sid LEFT JOIN room ON deviceowner.roomid=room.roid WHERE deviceid= $1 AND uid= $2 ',[did,uid]);
+    var sosvalue=null;
+    let queryClient = client.getQueryApi(org)
+    let fluxQuery = `from(bucket: "`+bucket+`")
+    |> range(start: -1m)
+    |> filter(fn: (r) => r._measurement == "soscenter")
+    |> filter(fn: (r) => r["device"] == "`+ownerdata.rows[0].mac+`")
+    |> filter(fn: (r) => r["_field"] == "sosvalue")
+    |> last()`
+    var j=0;
+    queryClient.queryRows(fluxQuery, {   
+        next: (row, tableMeta) => {
+            const tableObject = tableMeta.toObject(row)
+            //console.log(tableObject._value);
+            sosvalue=tableObject._value;
+            j++;
+        },
+        error: (error) => {
+            console.error('\nError', error)
+        },
+        complete: () => {
+            const step = (prop) => {
+                return new Promise(resolve => {
+                    setTimeout(() =>
+                    resolve(`done ${prop}`), 100);
+                })
+            } 
+            
+            res.render('iotSOSCenter',{data:ownerdata.rows[0],sosdata:sosvalue,session:req.session});
+                 
+        } 
+    });
+
+    
+};
+
 controller.noise = async (req,res) => { 
     const { did } = req.params;
     const { uid } = req.params;  
